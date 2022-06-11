@@ -1,11 +1,11 @@
 {
-  "name": "create-electron-ts-react",
-  "productName": "electron-ts-react",
-  "version": "3.1.14",
-  "description": "Electron Typescript React Boilerplate / Starter",
+  "name": "focuser",
+  "productName": "Focuser",
+  "version": "0.0.1",
+  "description": "A free & opensource distraction-reducing app for maximizing your productivity - built in electronJS!",
   "repository": {
     "type": "git",
-    "url": "https://github.com/saostad/Electron-React-Typescript.git"
+    "url": "https://github.com/F0cuser/focuser.git"
   },
   "bin": "./bin/setup.js",
   "main": ".webpack/main",
@@ -20,13 +20,12 @@
     "postpublish": "npm-run-all -s tag gen-changelog"
   },
   "keywords": [
-    "electron",
-    "typescript",
+    "Focus",
+    "Productivity",
     "react",
-    "starter",
-    "boilerplate"
+    "electron"
   ],
-  "author": "Saeid Ostad",
+  "author": "Lior Dahan",
   "license": "MIT",
   "config": {
     "forge": {
