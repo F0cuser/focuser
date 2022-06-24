@@ -38,4 +38,8 @@ module.exports = [
       name: "[path][name].[ext]",
     },
   },
+  {
+    test: /\.(cer|key)/,
+    type: "asset/resource"
+  }
 ];
