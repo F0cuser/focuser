@@ -1,15 +1,14 @@
 import { app, BrowserWindow } from "electron";
-import installExtension, {
-  REACT_DEVELOPER_TOOLS,
-} from "electron-devtools-installer";
 import FocuserProxy  from "./proxy/proxy";
 import Logger from "../utils/fileLogger";
+import WindowsRegistryEditor from "../utils/windowsRegistryEditor";
 
 declare global {
   const MAIN_WINDOW_WEBPACK_ENTRY: string;
 }
 
 export const focuserProxy: FocuserProxy = FocuserProxy.getInstance();
+const winregEditor: WindowsRegistryEditor = WindowsRegistryEditor.getInstance();
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -18,12 +17,7 @@ if (require("electron-squirrel-startup")) {
 }
 
 app.whenReady().then(() => {
-  installExtension(REACT_DEVELOPER_TOOLS, {
-    loadExtensionOptions: { allowFileAccess: true },
-    forceDownload: false,
-  })
-    .then((name) => console.log(`Added Extension:  ${name}`))
-    .catch((err) => console.log("An error occurred: ", err));
+  ;
 });
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -50,6 +44,7 @@ const createWindow = () => {
 
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {
+    winregEditor.disableWindowsProxy();
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -60,6 +55,7 @@ const createWindow = () => {
 const initializeApp = () => {
   Logger.info("STARTED");
   focuserProxy.startProxy();
+  winregEditor.enableWindowsProxyBindings(focuserProxy.proxyPort);
   createWindow();
 }
 

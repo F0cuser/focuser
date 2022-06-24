@@ -2,15 +2,16 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import httpProxy from 'http-proxy';
-import Logger from "../../utils/fileLogger";
+import { AddressInfo } from 'net'
 
+import Logger from "../../utils/fileLogger";
 
 class FocuserProxy {
 
   static instance: FocuserProxy;
   proxy: httpProxy;
   webserver: http.Server;
-  proxyPort: number;
+  public proxyPort: number;
 
   private constructor() {
     
@@ -43,15 +44,18 @@ class FocuserProxy {
 
   public startProxy() {
     Logger.info("Starting Focuser Proxy...");
-    const listener = this.webserver.listen(0)
-    this.proxyPort = listener.address()?.port;
+    const listener = this.webserver.listen(0);
+    const { port } = listener.address() as AddressInfo;
+    this.proxyPort = port
     Logger.info(`Success! Listening on ${this.proxyPort}`);
   }
 
+
   private handleProxyRequest(proxyReq: http.ClientRequest, req: http.IncomingMessage, res: http.ServerResponse, options: any) {
-    Logger.info(proxyReq);
-    Logger.info(req);
-    Logger.info(res);
+    Logger.info(proxyReq.host);
+    proxyReq.setHeader('X-Special-Proxy-Header', 'foobar');
+    // Logger.info(req);
+    // Logger.info(res);
   }
   
 }
