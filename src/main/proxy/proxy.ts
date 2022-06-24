@@ -19,7 +19,7 @@ class FocuserProxy {
       on: {
         proxyReq: this.handleProxyRequest
       },
-      target: '*'
+      target: 'http://localhost'
     }
     this.proxy = createProxyMiddleware(options);
     this.expressApp.use(this.proxy);
@@ -36,8 +36,9 @@ class FocuserProxy {
   public startProxy() {
     Logger.info("Starting Focuser Proxy...");
     const listener = this.expressApp.listen(0);
-    this.proxyPort = listener.address()?.port
-    Logger.info(`Success! Listening on ${this.proxyPort}`)
+
+    this.proxyPort = listener.address()?.port;
+    Logger.info(`Success! Listening on ${this.proxyPort}`);
   }
 
   private handleProxyRequest(proxyReq: any, req: any, res: any) {
