@@ -36,7 +36,8 @@ class FocuserProxy {
   public startProxy() {
     Logger.info("Starting Focuser Proxy...");
     const listener = this.expressApp.listen(0);
-    Logger.info(`Success! Listening on ${listener.address()?.port}`)
+    this.proxyPort = listener.address()?.port
+    Logger.info(`Success! Listening on ${this.proxyPort}`)
   }
 
   private handleProxyRequest(proxyReq: any, req: any, res: any) {
