@@ -28,6 +28,7 @@ class FocuserProxy {
     this.proxy = httpProxy.createProxyServer(options);
     this.proxy.on('proxyReq', this.handleProxyRequest)
     this.webserver = http.createServer((req, res) => {
+      Logger.info("WEBSERVER")
       this.proxy.web(req, res, {
         target: req.headers.host
       })
@@ -53,6 +54,8 @@ class FocuserProxy {
 
   private handleProxyRequest(proxyReq: http.ClientRequest, req: http.IncomingMessage, res: http.ServerResponse, options: any) {
     Logger.info(proxyReq.host);
+    Logger.info("proxy")
+
     proxyReq.setHeader('X-Special-Proxy-Header', 'foobar');
     // Logger.info(req);
     // Logger.info(res);
