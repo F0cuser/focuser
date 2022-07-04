@@ -1,14 +1,15 @@
 import { app, BrowserWindow } from "electron";
-import FocuserProxy  from "./proxy/proxy";
+import PacServer  from "./proxy/pacServer";
 import Logger from "../utils/fileLogger";
 import WindowsRegistryEditor from "../utils/windowsRegistryEditor";
+
 
 declare global {
   const MAIN_WINDOW_WEBPACK_ENTRY: string;
 }
 
 
-export const focuserProxy: FocuserProxy = FocuserProxy.getInstance();
+export const pacServer: PacServer = PacServer.getInstance();
 const winregEditor: WindowsRegistryEditor = WindowsRegistryEditor.getInstance();
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -45,7 +46,7 @@ const createWindow = () => {
 
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {
-    winregEditor.disableWindowsProxy();
+    winregEditor.deletePacServer();
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -53,10 +54,14 @@ const createWindow = () => {
   });
 };
 
+const startPacServer = async () => {
+  await pacServer.startServer();
+  winregEditor.setPacServer(pacServer.port)
+}
+
 const initializeApp = () => {
   Logger.info("STARTED");
-  focuserProxy.startProxy();
-  winregEditor.enableWindowsProxyBindings(focuserProxy.proxyPort);
+  startPacServer();
   createWindow();
 }
 

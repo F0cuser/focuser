@@ -21,27 +21,21 @@ class WindowsRegistryEditor {
     
         return WindowsRegistryEditor.instance;
     }
-
     
-    private enableProxy() {
-        Logger.info("Enabling proxy in Windows Registry");
-        this.regKey.set('ProxyEnable', Registry.REG_DWORD, '1', () => {;})
-    }
-    
-    public disableWindowsProxy() {
+    public deletePacServer() {
         Logger.info("Disabling proxy in Windows Registry");
-        this.regKey.set('ProxyEnable', Registry.REG_DWORD, '0', () => {;})
+        this.regKey.remove('AutoConfigUrl', () => {;})
     }
     
-    private setProxyServer(proxyPort: number) {
-        Logger.info(`Setting proxy server in Windows Registry to: 127.0.0.1:${proxyPort}`);
-        this.regKey.set('ProxyServer', Registry.REG_SZ, `127.0.0.1:${proxyPort}`, () => {;})
+    public setPacServer(pacServerPort: number) {
+        const registryValue = `http://127.0.0.1:${pacServerPort}/proxy.pac`
+        Logger.info(`Setting PAC server in Windows Registry to: ${registryValue}`);
+        this.regKey.set('AutoConfigUrl', Registry.REG_SZ, registryValue, () => {;})
     }
 
-    public enableWindowsProxyBindings(proxyPort: number) {
-        this.setProxyServer(proxyPort);
-        this.enableProxy();
-    }
+    // public enableWindowsProxyBindings(pacServerPort: number) {
+    //     this.setPacServer(pacServerPort);
+    // }
     
 }
 
