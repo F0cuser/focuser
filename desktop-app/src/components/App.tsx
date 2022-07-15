@@ -1,16 +1,18 @@
 import React from "react";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { hot } from "react-hot-loader/root";
+import Timer from './routes/timer';
+import Sidebar from "./base/sidebar";
 
-import "./style.css";
 
 function App() {
   return (
-    <div>
-      <h3>Hello From Electron App</h3>
-      <h4>Electron: {process.versions.electron}</h4>
-      <h4>Chrome: {process.versions.chrome}</h4>
-      <h4>Node: {process.versions.node}</h4>
-    </div>
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={ <Timer /> } />
+      </Routes>
+      <Sidebar />
+    </HashRouter>
   );
 }
 
