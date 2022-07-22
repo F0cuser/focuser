@@ -1,17 +1,30 @@
 import React from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { hot } from "react-hot-loader/root";
-import Timer from './routes/timer';
-import Sidebar from "./base/sidebar";
+import Timer from './routes/Timer';
+import AppSelect from "./routes/AppSelect";
+import UrlSelect from "./routes/UrlSelect";
+import Settings from "./routes/Settings";
+import Sidebar from "./base/Sidebar";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.module.css';
 
 
 function App() {
   return (
     <HashRouter>
-      <Routes>
-        <Route path="/" element={ <Timer /> } />
-      </Routes>
       <Sidebar />
+      <div className="main">
+        <Routes>
+          <Route path="/">
+            <Route index element={ <Timer /> } />
+            <Route path="/urls" element={ <UrlSelect /> } />
+            <Route path="/apps" element={ <AppSelect /> } />
+            <Route path="/settings" element={ <Settings /> } />
+          </Route>
+          
+        </Routes>
+      </div>
     </HashRouter>
   );
 }

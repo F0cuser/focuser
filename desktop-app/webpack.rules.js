@@ -33,10 +33,8 @@ module.exports = [
   },
   {
     test: /\.(jpg|png|woff|woff2|eot|ttf)$/,
-    loader: "url-loader",
-    options: {
-      name: "[path][name].[ext]",
-    },
+    type: 'asset/resource',
+    dependency: { not: ['url'] },
   },
   {
     test: /\.(cer|key)/,

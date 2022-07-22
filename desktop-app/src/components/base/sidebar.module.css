@@ -1,0 +1,41 @@
+.sidebar {
+    background-color: var(--secondary-color);
+    font-family: var(--sidebar-font);
+    font-size: clamp(16px, 3vw, 32px);
+
+    position: fixed;
+    height: 100%;
+    width: clamp(100px, 15.625vw, 200px);
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.brandWrapper {
+    text-align: center;
+}
+
+.brandWrapper img {
+    width: 70%;
+}
+
+a.active > div {
+    background-color: #80c9ec;
+
+}
+
+.navLinkImage {
+    width: clamp(12px, 2.84vw, 36px);
+}
+
+.navLinkText {
+    font-family: 'Sidebar';
+    font-size: clamp(8px, 1.45vw, 18px);
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.bottomWrapper {
+    position: absolute;
+    bottom: 0;
+}
