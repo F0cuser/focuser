@@ -1,0 +1,43 @@
+.urlItem {
+    background-color: #400f44;
+    padding: 15px;
+    width: 65%;
+    border-radius: 6px;
+    height: 80px;
+    transition: 0.2s;
+}
+
+.urlItem:hover {
+    filter: brightness(150%);
+}
+
+.deleteItemImage:hover, .addUrl:hover .addUrlImage {
+    transition: 0.2s;
+}
+
+
+.deleteItemImage:hover, .addUrl:hover .addUrlImage {
+    filter: invert(52%) sepia(27%) saturate(7422%) hue-rotate(170deg) brightness(89%) contrast(104%);
+    transition: 0.2s;
+}
+
+.urlItem img {
+    filter: invert(80%) sepia(0%) saturate(1008%) hue-rotate(218deg) brightness(87%) contrast(78%);
+
+}
+
+.addUrl img {
+    width: 46px;
+    aspect-ratio: 1;
+}
+
+.urlText {
+    font-family: 'George Regular';
+    color: #f1f1f1;
+    font-size: 24px;
+}
+
+.urlImage {
+    width: 29px;
+    height: 45px;
+}

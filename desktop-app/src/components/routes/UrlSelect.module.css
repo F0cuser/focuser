@@ -10,34 +10,7 @@
 }
 
 .urlListWrapper {
-    margin-top: 12%;
+    margin-top: 8%;
 
 }
 
-.urlItem {
-    background-color: #400f44;
-    padding: 15px;
-    width: 55%;
-    border-radius: 6px;
-}
-
-.urlItem img {
-    filter: invert(80%) sepia(0%) saturate(1008%) hue-rotate(218deg) brightness(87%) contrast(78%);
-
-}
-
-.addUrl img {
-    width: 46px;
-    aspect-ratio: 1;
-}
-
-.urlText {
-    font-family: 'George Regular';
-    color: #f1f1f1;
-    font-size: 24px;
-}
-
-.urlImage {
-    width: 29px;
-    height: 45px;
-}
