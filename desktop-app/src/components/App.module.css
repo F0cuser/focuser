@@ -64,3 +64,28 @@ body {
 	size-adjust: 125%;
 	font-weight: bold;
 }
+
+@font-face {
+    font-family: 'Header';
+    src: url('../../public/static/fonts/SecularOne-Regular.ttf') format('truetype');
+	size-adjust: 600%;
+	font-weight: bolder;
+}
+
+@font-face {
+    font-family: 'George Light';
+    src: url('../../public/static/fonts/GeorgeRoundedLight.ttf') format('truetype');
+	size-adjust: 100%;
+}
+
+@font-face {
+    font-family: 'George Regular';
+    src: url('../../public/static/fonts/GeorgeRoundedRegular.ttf') format('truetype');
+	size-adjust: 100%;
+}
+
+@font-face {
+    font-family: 'George Bold';
+    src: url('../../public/static/fonts/GeorgeRoundedBold.ttf') format('truetype');
+	size-adjust: 100%;
+}

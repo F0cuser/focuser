@@ -2,7 +2,7 @@ import React from "react";
 
 const AppSelect = () => {
     return (
-      <div className="TimerWrapper">hello woarld</div>  
+      <div className="TimerWrapper">hello w</div>  
     );
 }
 
