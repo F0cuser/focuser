@@ -4,13 +4,20 @@
 
 }
 
+.urlListWrapper {
+    width: 100%;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.urlListWrapper::-webkit-scrollbar {
+    display: none;
+  }
+
 .urlHeader {
+    margin-top: 23%;
     font-family: 'Header';
     color: var(--tertiary-color);
 }
 
-.urlListWrapper {
-    margin-top: 8%;
-
-}
 

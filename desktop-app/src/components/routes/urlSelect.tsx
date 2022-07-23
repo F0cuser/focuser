@@ -9,12 +9,21 @@ import UrlItem from "../reusables/UrlItem";
 const UrlSelect = () => {
     return (
       <div className={`${styles.urlSelectWrapper} text-center`}>
-        <h1 className={`${styles.urlHeader}`}>Website URLs</h1>
-        <div className={`${styles.urlListWrapper} d-flex flex-column align-items-center`}>
+        <div className={`d-flex flex-column align-items-center`}>
+          <div className={`${styles.urlListWrapper} d-flex flex-column align-items-center`}>
+            <UrlItem />
+            <UrlItem />
+            <UrlItem />
+            <UrlItem />
+            <UrlItem />
+            <UrlItem />
+            <UrlItem />
+          </div>
           <UrlItem addItem />
-          <UrlItem />
-      
+
         </div>
+        <h1 className={`${styles.urlHeader}`}>Website URLs</h1>
+
       </div>  
     );
 }
