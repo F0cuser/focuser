@@ -6,7 +6,7 @@
 
 .urlListWrapper {
     width: 100%;
-    max-height: 400px;
+    max-height: clamp(200px, 37vh, 400px);
     overflow-y: scroll;
 }
 
@@ -15,7 +15,7 @@
   }
 
 .urlHeader {
-    margin-top: 23%;
+    margin-top: clamp(150px, 27vh, 300px);
     font-family: 'Header';
     color: var(--tertiary-color);
 }

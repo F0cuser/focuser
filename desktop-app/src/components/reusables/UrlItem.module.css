@@ -3,7 +3,7 @@
     padding: 15px;
     width: 75%;
     border-radius: 6px;
-    height: 80px;
+    height: clamp(40px, 7.4vh, 80px);
     transition: 0.2s;
 }
 
@@ -27,17 +27,17 @@
 }
 
 .addUrl img {
-    width: 46px;
+    width: clamp(28px, 2.5vw, 46px);
     aspect-ratio: 1;
 }
 
 .urlText {
     font-family: 'George Regular';
     color: #f1f1f1;
-    font-size: 24px;
+    font-size: clamp(12px, 1.25vw, 24px);
 }
 
 .urlImage {
-    width: 29px;
-    height: 45px;
+    width: clamp(19.5px, 1.51vw, 29px);
+    height: clamp(27.5px, 4.16vh, 45px);
 }
