@@ -1,12 +1,16 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, session } from "electron";
 import PacServer  from "./proxy/pacServer";
 import Logger from "../utils/fileLogger";
 import WindowsRegistryEditor from "../utils/windowsRegistryEditor";
 
 
+
+
 declare global {
   const MAIN_WINDOW_WEBPACK_ENTRY: string;
 }
+
+
 
 
 export const pacServer: PacServer = PacServer.getInstance();
@@ -19,7 +23,14 @@ if (require("electron-squirrel-startup")) {
 }
 
 app.whenReady().then(() => {
-  ;
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        'Content-Security-Policy': ['*']
+      }
+    })
+  })
 });
 
 // Keep a global reference of the window object, if you don't, the window will
