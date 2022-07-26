@@ -8,7 +8,7 @@ import deleteItemPath from "../../../public/static/images/delete-item.svg";
 const UrlItem = (props: { addItem?: boolean }) => {
   if (props.addItem) {
     return (
-      <div className={`${styles.urlItem} ${styles.addUrl} text-center mt-3`}>
+      <div className={`${styles.urlItem} ${styles.addUrl} justify-content-center mt-3 d-flex align-items-center`}>
         <img src={addItemPath} alt="add-url" class={`${styles.addUrlImage}`} />
       </div>
     );
