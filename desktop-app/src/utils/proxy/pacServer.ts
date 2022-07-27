@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { AddressInfo } from "net";
 
-import Logger from "../../utils/fileLogger";
+import Logger from "../fileLogger";
 
 class PacServer {
   public port: number;

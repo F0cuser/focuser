@@ -5,11 +5,15 @@ module.exports = {
    */
   entry: "./src/main/main.ts",
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".cer", ".key", '.css', '.module.css']
+    extensions: [".ts", ".tsx", ".js", ".cer", ".key", ".css", ".module.css"],
+    fallback: {
+      fs: false,
+      path: false,
+    },
   },
 
   node: {
-    __dirname: true
+    __dirname: true,
   },
 
   // // Put your normal webpack config below here

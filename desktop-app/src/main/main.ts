@@ -1,5 +1,5 @@
 import { app, BrowserWindow, session } from "electron";
-import PacServer  from "./proxy/pacServer";
+import PacServer  from "../utils/proxy/pacServer";
 import Logger from "../utils/fileLogger";
 import WindowsRegistryEditor from "../utils/windowsRegistryEditor";
 
@@ -38,9 +38,6 @@ app.whenReady().then(() => {
 let mainWindow: null | BrowserWindow;
 
 const createWindow = () => {
-  Logger.info("STARTEDWIN");
-
-  // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
