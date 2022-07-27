@@ -122,7 +122,7 @@ button {
 	border-radius: 20px;
 	font-size: clamp(10px, 1.25vw, 20px);
 	width: clamp(76px, 11.875vw, 152px);
-	height: clamp(31px, 4.84vh, 62px);
+	height: clamp(42px, 4.84vh, 62px);
 	transition: 0.2s;
 }
 

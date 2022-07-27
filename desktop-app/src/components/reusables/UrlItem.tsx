@@ -7,8 +7,9 @@ import styles from "./UrlItem.module.css";
 
 import addItemPath from "../../../public/static/images/add-item.svg";
 import deleteItemPath from "../../../public/static/images/delete-item.svg";
+import { removeUrl } from "../../utils/reducers/urls";
 
-const UrlItem = (props: { addItem?: boolean }) => {
+const UrlItem = (props: { addItem?: boolean, url?: string }) => {
   const dispatch = useDispatch();
   if (props.addItem) {
 
@@ -24,11 +25,12 @@ const UrlItem = (props: { addItem?: boolean }) => {
       <div
         className={`${styles.urlItem} mt-3 d-flex align-items-center justify-content-between`}
       >
-        <p className={`${styles.urlText}`}>google.com</p>
+        <p className={`${styles.urlText}`}>{props.url}</p>
         <img
           className={`${styles.urlImage} ${styles.deleteItemImage}`}
           src={deleteItemPath}
           alt="delete-url"
+          onClick={() => dispatch(removeUrl(props.url))}
         />
       </div>
     );
