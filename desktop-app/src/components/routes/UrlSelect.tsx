@@ -2,6 +2,7 @@ import React from "react";
 import styles from './UrlSelect.module.css';
 
 import UrlItem from "../reusables/UrlItem";
+import AddUrl from "../modals/AddUrlModal";
 
 
 
@@ -9,6 +10,7 @@ import UrlItem from "../reusables/UrlItem";
 const UrlSelect = () => {
     return (
       <div className={`${styles.urlSelectWrapper} text-center`}>
+        <AddUrl />
         <div className={`d-flex flex-column align-items-center`}>
           <div className={`${styles.urlListWrapper} d-flex flex-column align-items-center`}>
             <UrlItem />

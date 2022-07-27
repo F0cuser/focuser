@@ -18,7 +18,11 @@ const UrlItem = (props: { addItem?: boolean }) => {
         className={`${styles.urlItem} mt-3 d-flex align-items-center justify-content-between`}
       >
         <p className={`${styles.urlText}`}>google.com</p>
-        <button><i className="fi fi-ss-trash" /></button>
+        <img
+          className={`${styles.urlImage} ${styles.deleteItemImage}`}
+          src={deleteItemPath}
+          alt="delete-url"
+        />
       </div>
     );
   }

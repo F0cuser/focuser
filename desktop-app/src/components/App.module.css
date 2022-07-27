@@ -18,6 +18,16 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
+button, input[type="submit"], input[type="reset"] {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -47,6 +57,10 @@ table {
 	border-spacing: 0;
 }
 
+*:focus {
+	outline: none;
+  }
+
 body {
     --primary-color: #1f0821;
     --secondary-color: #0093d9;
@@ -56,6 +70,8 @@ body {
 
     background-color: var(--primary-color);
 }
+
+
 
 @font-face {
     font-family: 'Sidebar';
@@ -87,4 +103,30 @@ body {
     font-family: 'George Bold';
     src: url('../../public/static/fonts/GeorgeRoundedBold.ttf') format('truetype');
 	size-adjust: 100%;
+}
+
+input {
+	background-color: var(--primary-color);
+	filter: brightness(80%);
+	border: solid 2px var(--secondary-color);
+	border-radius: 15px;
+	font-family: 'Sidebar';
+	padding: 10px;
+	color: #ffffff;
+}
+
+button {
+	background-color: var(--secondary-color);
+	color: var(--primary-color);
+	font-family: 'George Bold';
+	border-radius: 20px;
+	font-size: clamp(10px, 1.25vw, 20px);
+	width: clamp(76px, 11.875vw, 152px);
+	height: clamp(31px, 4.84vh, 62px);
+	transition: 0.2s;
+}
+
+button:hover {
+	background-color: var(--tertiary-color);
+	transform: scale(1.05);
 }

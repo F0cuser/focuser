@@ -1,0 +1,25 @@
+.modalWrapper {
+    height: 100%;
+    width: 50%;
+    background-color: var(--primary-color);
+    filter: brightness(110%);
+    border-radius: 15px;
+}
+
+.exitButtonWrapper {
+    text-align: right;
+    display: block;
+}
+
+.closeModalButton {
+    aspect-ratio: 1;
+    width: clamp(24px, 5vw, 48px);
+    filter: invert(80%) sepia(0%) saturate(1008%) hue-rotate(218deg) brightness(87%) contrast(78%);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.closeModalButton:hover {
+    filter: invert(52%) sepia(27%) saturate(7422%) hue-rotate(170deg) brightness(89%) contrast(104%);
+    transform: scale(1.05);
+}

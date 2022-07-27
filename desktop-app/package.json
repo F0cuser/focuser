@@ -106,6 +106,7 @@
     "@types/node": "^16.11.41",
     "@types/react": "^18.0.3",
     "@types/react-dom": "^18.0.0",
+    "@types/react-modal": "^3.13.1",
     "@types/winreg": "^1.2.31",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
