@@ -15,7 +15,24 @@ import "./App.module.css";
 function App() {
   return (
     <Provider store={store}>
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          success: {
+            style: {
+              background: "#15591d",
+            },
+          },
+          error: {
+            style: {
+              background: "#6e1414",
+            },
+          },
+          style: {
+            fontFamily: 'George Regular',
+            color: '#f1f1f1'
+          }
+        }}
+      />
       <HashRouter>
         <Sidebar />
         <div className="main">
