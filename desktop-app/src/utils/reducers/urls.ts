@@ -10,12 +10,12 @@ export const urlsReducer = createSlice({
   reducers: {
     setUrls: (state, action) => {
       state.urls = action.payload;
-      ipcRenderer.invoke(channels.WRITE_SETTINGS, [{ urls: action.payload }]);
+      ipcRenderer.invoke(channels.WRITE_SETTINGS, { key: 'urls', value: state.urls });
     },
     removeUrl: (state, action) => {
       state.urls = state.urls.filter((item) => item !== action.payload);
       console.log(state.urls);
-      ipcRenderer.invoke(channels.WRITE_SETTINGS, [{ urls: state.urls }]);
+      ipcRenderer.invoke(channels.WRITE_SETTINGS, { key: 'urls', value: state.urls });
     },
     setUrlsFromSettings: (state, action) => {
       state.urls = action.payload;

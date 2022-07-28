@@ -22,7 +22,6 @@ export class Store {
 
   set(key: string | number, val: any) {
     this.data[key] = val;
-    console.log(key, this.data[key])
     fs.writeFileSync(this.path, JSON.stringify(this.data));
   }
 }

@@ -1,22 +1,17 @@
 import { app, BrowserWindow, session, ipcMain } from "electron";
-import PacServer  from "../utils/proxy/pacServer";
+import PacServer from "../utils/proxy/pacServer";
 import Logger from "../utils/fileLogger";
 import WindowsRegistryEditor from "../utils/windowsRegistryEditor";
-import { channels } from '../utils/shared/constants';
-import { Store } from '../utils/settingsInterface'
-
-
+import { channels } from "../utils/shared/constants";
+import { Store } from "../utils/settingsInterface";
 
 declare global {
   const MAIN_WINDOW_WEBPACK_ENTRY: string;
 }
 
-
-
-
 export const pacServer: PacServer = PacServer.getInstance();
 const winregEditor: WindowsRegistryEditor = WindowsRegistryEditor.getInstance();
-const settingsStore = new Store({configName: 'focuser', defaults: []})
+const settingsStore = new Store({ configName: "focuser", defaults: [] });
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -29,10 +24,10 @@ app.whenReady().then(() => {
     callback({
       responseHeaders: {
         ...details.responseHeaders,
-        'Content-Security-Policy': ['*']
-      }
-    })
-  })
+        "Content-Security-Policy": ["*"],
+      },
+    });
+  });
 });
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -53,7 +48,6 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {
     winregEditor.deletePacServer();
@@ -66,14 +60,14 @@ const createWindow = () => {
 
 const startPacServer = async () => {
   await pacServer.startServer();
-  winregEditor.setPacServer(pacServer.port)
-}
+  winregEditor.setPacServer(pacServer.port);
+};
 
 const initializeApp = () => {
   Logger.info("STARTED");
   startPacServer();
   createWindow();
-}
+};
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -105,14 +99,11 @@ ipcMain.handle(channels.READ_SETTINGS, async (_, args) => {
   const resultsToReturn = [];
   for (const arg of args) {
     const result = settingsStore.get(arg);
-    resultsToReturn.push({[arg]: result});
+    resultsToReturn.push({ [arg]: result });
   }
   return resultsToReturn;
-})
+});
 
 ipcMain.handle(channels.WRITE_SETTINGS, async (_, args) => {
-  for (const arg of args) {
-    console.log(arg)
-    settingsStore.set(arg.key, arg.value)
-  }
-})
+  settingsStore.set(args.key, args.value);
+});
