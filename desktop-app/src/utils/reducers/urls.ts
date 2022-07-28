@@ -1,22 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
-import settingsStore from "../settingsInterface";
+import { channels } from "../shared/constants";
+const { ipcRenderer } = window.require("electron");
 
 export const urlsReducer = createSlice({
   name: "urls",
   initialState: {
-    urls: settingsStore.get("urls") as unknown as string[],
+    urls: [] as string[],
   },
   reducers: {
-    addUrl: (state, action) => {
-      state.urls.push(action.payload);
-      settingsStore.set("urls", state.urls);
+    setUrls: (state, action) => {
+      state.urls = action.payload;
+      ipcRenderer.invoke(channels.WRITE_SETTINGS, [{ urls: action.payload }]);
     },
     removeUrl: (state, action) => {
       state.urls = state.urls.filter((item) => item !== action.payload);
-      settingsStore.set("urls", state.urls);
+      console.log(state.urls);
+      ipcRenderer.invoke(channels.WRITE_SETTINGS, [{ urls: state.urls }]);
+    },
+    setUrlsFromSettings: (state, action) => {
+      state.urls = action.payload;
     },
   },
 });
 
-export const { addUrl, removeUrl } = urlsReducer.actions;
+export const { removeUrl, setUrls, setUrlsFromSettings } = urlsReducer.actions;
 export default urlsReducer.reducer;

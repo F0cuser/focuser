@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../utils/reducers/modal";
-import { addUrl } from "../../utils/reducers/urls";
+import { setUrls } from "../../utils/reducers/urls";
 import { RootState } from "../../utils/store";
 
 import styles from "./AddUrlModal.module.css";
 
 const AddUrl = () => {
   const dispatch = useDispatch();
-  const urls = useSelector((state: RootState) => state.urls.urls);
+  const urls = [...useSelector((state: RootState) => state.urls.urls)];
 
   useEffect(() => document.getElementById('addUrlInput')?.focus(), [])
 
@@ -21,8 +21,10 @@ const AddUrl = () => {
       toast.error(`${newUrl} already exists in your blocked URL list!`);
       return;
     }
-    dispatch(addUrl(newUrl));
+    urls.push(newUrl);
+    dispatch(setUrls(urls));
     toast.success(`${newUrl} has been successfully added!`);
+    document.getElementById('addUrlInput')?.focus()
     if (shouldClose) {
       dispatch(closeModal())
     }

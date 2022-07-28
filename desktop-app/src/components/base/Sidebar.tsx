@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
+
+import { channels } from '../../utils/shared/constants'
+import { setUrlsFromSettings } from "../../utils/reducers/urls";
 
 import styles from "./Sidebar.module.css";
 import timerPath from "../../../public/static/images/timer.svg";
@@ -7,8 +10,26 @@ import logoPath from "../../../public/static/images/logo.svg";
 import urlsPath from "../../../public/static/images/urls.svg";
 import appsPath from "../../../public/static/images/applications.svg";
 import settingsPath from "../../../public/static/images/settings.svg";
+import { useDispatch } from "react-redux";
+
+const { ipcRenderer } = window.require('electron');
+
 
 const Sidebar = () => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    ipcRenderer.invoke(channels.READ_SETTINGS, ['urls']).then(results => {
+      const urls = results.urls;
+      console.log(urls)
+      if (urls)
+        dispatch(setUrlsFromSettings(results.urls))
+    })
+  }, [dispatch])
+
+
+
   return (
     <div className={styles.sidebar}>
       <div className={styles.brandWrapper}>

@@ -1,8 +1,9 @@
-import { app, BrowserWindow, session } from "electron";
+import { app, BrowserWindow, session, ipcMain } from "electron";
 import PacServer  from "../utils/proxy/pacServer";
 import Logger from "../utils/fileLogger";
 import WindowsRegistryEditor from "../utils/windowsRegistryEditor";
-
+import { channels } from '../utils/shared/constants';
+import settingsStore from '../utils/settingsInterface'
 
 
 
@@ -98,3 +99,19 @@ app.on("activate", () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+ipcMain.handle(channels.READ_SETTINGS, async (_, args) => {
+  const resultsToReturn = [];
+  for (const arg of args) {
+    const result = settingsStore.get(arg);
+    resultsToReturn.push({arg: result});
+  }
+  return resultsToReturn;
+})
+
+ipcMain.handle(channels.WRITE_SETTINGS, async (_, args) => {
+  for (const arg of args) {
+    console.log(arg)
+    settingsStore.set(arg.key, arg.value)
+  }
+})

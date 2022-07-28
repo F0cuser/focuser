@@ -4,14 +4,13 @@ import styles from "./UrlSelect.module.css";
 import UrlItem from "../reusables/UrlItem";
 import BaseModal from "../modals/BaseModal";
 import AddUrl from "../modals/AddUrlModal";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { RootState } from "../../utils/store";
-
 
 
 const UrlSelect = () => {
   const urls = useSelector((state: RootState) => state.urls.urls);
-
+  
   return (
     <div className={`${styles.urlSelectWrapper} text-center`}>
       <BaseModal modalId='addUrl'>
