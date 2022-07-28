@@ -1,22 +1,19 @@
 const path = require('path')
 const fs = require('fs')
 
-class Store {
+const parseDataFile = (filePath: any, defaults: any) => {
+  return JSON.parse(fs.readFileSync(filePath));
+
+}
+export class Store {
   path: any;
   data: any;
 
-  static parseDataFile(filePath: any, defaults: any) {
-    try {
-      return JSON.parse(fs.readFileSync(filePath));
-    } catch (error) {
-      return defaults;
-    }
-  }
 
   constructor(opts: { configName: string; defaults: any }) {
     const userDataPath = __dirname;
     this.path = path.join(userDataPath, opts.configName + ".json");
-    this.data = Store.parseDataFile(this.path, opts.defaults);
+    this.data = parseDataFile(this.path, opts.defaults);
   }
 
   get(key: string | number) {
@@ -25,6 +22,7 @@ class Store {
 
   set(key: string | number, val: any) {
     this.data[key] = val;
+    console.log(key, this.data[key])
     fs.writeFileSync(this.path, JSON.stringify(this.data));
   }
 }

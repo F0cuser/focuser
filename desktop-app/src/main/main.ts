@@ -3,7 +3,7 @@ import PacServer  from "../utils/proxy/pacServer";
 import Logger from "../utils/fileLogger";
 import WindowsRegistryEditor from "../utils/windowsRegistryEditor";
 import { channels } from '../utils/shared/constants';
-import settingsStore from '../utils/settingsInterface'
+import { Store } from '../utils/settingsInterface'
 
 
 
@@ -16,6 +16,7 @@ declare global {
 
 export const pacServer: PacServer = PacServer.getInstance();
 const winregEditor: WindowsRegistryEditor = WindowsRegistryEditor.getInstance();
+const settingsStore = new Store({configName: 'focuser', defaults: []})
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -104,7 +105,7 @@ ipcMain.handle(channels.READ_SETTINGS, async (_, args) => {
   const resultsToReturn = [];
   for (const arg of args) {
     const result = settingsStore.get(arg);
-    resultsToReturn.push({arg: result});
+    resultsToReturn.push({[arg]: result});
   }
   return resultsToReturn;
 })

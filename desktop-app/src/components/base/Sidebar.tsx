@@ -21,10 +21,9 @@ const Sidebar = () => {
 
   useEffect(() => {
     ipcRenderer.invoke(channels.READ_SETTINGS, ['urls']).then(results => {
-      const urls = results.urls;
-      console.log(urls)
+      const urls = results[0].urls;
       if (urls)
-        dispatch(setUrlsFromSettings(results.urls))
+        dispatch(setUrlsFromSettings(urls))
     })
   }, [dispatch])
 
