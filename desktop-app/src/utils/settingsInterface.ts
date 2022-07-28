@@ -1,7 +1,12 @@
+const electron = require("electron").app;
 const path = require('path')
 const fs = require('fs')
 
 const parseDataFile = (filePath: any, defaults: any) => {
+  if (!fs.existsSync(filePath)) {
+    fs.appendFileSync(filePath, '{}', () => {;});
+    return defaults;
+  }
   return JSON.parse(fs.readFileSync(filePath));
 
 }
@@ -11,7 +16,7 @@ export class Store {
 
 
   constructor(opts: { configName: string; defaults: any }) {
-    const userDataPath = __dirname;
+    const userDataPath = electron.getPath("userData");
     this.path = path.join(userDataPath, opts.configName + ".json");
     this.data = parseDataFile(this.path, opts.defaults);
   }
