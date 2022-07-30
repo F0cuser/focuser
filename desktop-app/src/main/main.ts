@@ -63,8 +63,14 @@ const startPacServer = async () => {
   winregEditor.setPacServer(pacServer.port);
 };
 
+const restartPacServer = async () => {
+  await pacServer.restartServer();
+  winregEditor.setPacServer(pacServer.port);
+}
+
 const initializeApp = () => {
   Logger.info("STARTED");
+  PacServer.buildPacFile(19090);
   startPacServer();
   createWindow();
 };
@@ -104,6 +110,8 @@ ipcMain.handle(channels.READ_SETTINGS, async (_, args) => {
   return resultsToReturn;
 });
 
-ipcMain.handle(channels.WRITE_SETTINGS, async (_, args) => {
+ipcMain.handle(channels.WRITE_URLS, async (_, args) => {
   settingsStore.set(args.key, args.value);
+  PacServer.buildPacFile(19090, args.value);
+  restartPacServer();
 });
