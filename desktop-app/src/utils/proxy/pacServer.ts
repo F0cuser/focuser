@@ -2,6 +2,8 @@ import http from "http";
 import fs from "fs";
 import path from "path";
 import { AddressInfo } from "net";
+import { rootPath } from 'electron-root-path';
+
 
 import Logger from "../fileLogger";
 
@@ -15,7 +17,7 @@ class PacServer {
       if (req.url === "/proxy.pac") {
         res.setHeader("Content-Type", "application/x-ns-proxy-autoconfig");
         const data = fs.readFileSync(
-          path.join(__dirname, "./proxy.pac"),
+          path.join(rootPath, "./resources/proxy.pac"),
           "utf8",
         );
         res.write(data);
