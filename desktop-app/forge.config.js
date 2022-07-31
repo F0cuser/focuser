@@ -1,7 +1,4 @@
 module.exports = {
-  packagerConfig: {
-    extraResource: "resources/proxy.pac"
-  },
   makers: [
     {
       name: "@electron-forge/maker-squirrel",

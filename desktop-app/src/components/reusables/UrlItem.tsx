@@ -2,6 +2,8 @@ import React from "react";
 import { useDispatch } from 'react-redux'
 
 import { openModal } from "../../utils/reducers/modal";
+import toast from "react-hot-toast";
+
 
 import styles from "./UrlItem.module.css";
 
@@ -10,6 +12,11 @@ import deleteItemPath from "../../../public/static/images/delete-item.svg";
 import { removeUrl } from "../../utils/reducers/urls";
 
 const UrlItem = (props: { addItem?: boolean, url?: string }) => {
+
+  const removeUrlItem = () => {
+    dispatch(removeUrl(props.url));
+    toast.success(`Successfully removed ${props.url}!`)
+  }
   const dispatch = useDispatch();
   if (props.addItem) {
 
@@ -30,7 +37,7 @@ const UrlItem = (props: { addItem?: boolean, url?: string }) => {
           className={`${styles.urlImage} ${styles.deleteItemImage}`}
           src={deleteItemPath}
           alt="delete-url"
-          onClick={() => dispatch(removeUrl(props.url))}
+          onClick={removeUrlItem}
         />
       </div>
     );
