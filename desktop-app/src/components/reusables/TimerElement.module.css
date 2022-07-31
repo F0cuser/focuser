@@ -1,0 +1,30 @@
+.timerAdjust, .timerAdjust:hover {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.digits, .separator {
+    font-size: clamp(64px, 10vw, 128px);
+    color: #f1f1f1;
+    font-family: "George Regular";
+}
+
+
+.buttonImage {
+    aspect-ratio: 1;
+    width: 48px;
+}
+
+.timerAdjust {
+    transition: all 200ms linear;
+}
+
+.timerAdjust:hover .buttonImage {
+    filter: brightness(0) saturate(100%) invert(89%) sepia(80%) saturate(1150%) hue-rotate(318deg) brightness(109%) contrast(97%);
+
+}
