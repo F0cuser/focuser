@@ -14,10 +14,10 @@
     display: none;
   }
 
+
 .urlHeader {
     margin-top: clamp(150px, 27vh, 300px);
-    font-family: 'Header';
+    font-family: "Header";
     color: var(--tertiary-color);
 }
-
-
+  

@@ -26,7 +26,7 @@ const UrlSelect = () => {
         </div>
         <UrlItem addItem />
       </div>
-      <h1 className={`${styles.urlHeader}`}>Website URLs</h1>
+      <h1 className={`${styles.urlHeader} pageHeader`}>Website URLs</h1>
     </div>
   );
 };

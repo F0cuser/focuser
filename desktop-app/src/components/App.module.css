@@ -1,132 +1,217 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 
-button, input[type="submit"], input[type="reset"] {
-	background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	cursor: pointer;
-	outline: inherit;
+button,
+input[type="submit"],
+input[type="reset"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
 }
 body {
-	line-height: 1;
-	overflow: hidden;
+  line-height: 1;
+  overflow: hidden;
 }
-ol, ul {
-	list-style: none;
+ol,
+ul {
+  list-style: none;
 }
 a {
-	text-decoration: none;
-	color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
-blockquote, q {
-	quotes: none;
+blockquote,
+q {
+  quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
 }
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 *:focus {
-	outline: none;
-  }
+  outline: none;
+}
 
 body {
-    --primary-color: #1f0821;
-    --secondary-color: #0093d9;
-    --tertiary-color: #fbdb53;
-    --sidebar-font: 'Secular One', sans-serif;
-    
+  --primary-color: #1f0821;
+  --secondary-color: #0093d9;
+  --tertiary-color: #fbdb53;
+  --sidebar-font: "Secular One", sans-serif;
 
-    background-color: var(--primary-color);
-}
-
-
-
-@font-face {
-    font-family: 'Sidebar';
-    src: url('../../public/static/fonts/SecularOne-Regular.ttf') format('truetype');
-	size-adjust: 125%;
-	font-weight: bold;
+  background-color: var(--primary-color);
 }
 
 @font-face {
-    font-family: 'Header';
-    src: url('../../public/static/fonts/SecularOne-Regular.ttf') format('truetype');
-	size-adjust: 600%;
-	font-weight: bolder;
+  font-family: "Sidebar";
+  src: url("../../public/static/fonts/SecularOne-Regular.ttf")
+    format("truetype");
+  size-adjust: 125%;
+  font-weight: bold;
 }
 
 @font-face {
-    font-family: 'George Light';
-    src: url('../../public/static/fonts/GeorgeRoundedLight.ttf') format('truetype');
-	size-adjust: 100%;
+  font-family: "Header";
+  src: url("../../public/static/fonts/SecularOne-Regular.ttf")
+    format("truetype");
+  size-adjust: 600%;
+  font-weight: bolder;
 }
 
 @font-face {
-    font-family: 'George Regular';
-    src: url('../../public/static/fonts/GeorgeRoundedRegular.ttf') format('truetype');
-	size-adjust: 100%;
+  font-family: "George Light";
+  src: url("../../public/static/fonts/GeorgeRoundedLight.ttf")
+    format("truetype");
+  size-adjust: 100%;
 }
 
 @font-face {
-    font-family: 'George Bold';
-    src: url('../../public/static/fonts/GeorgeRoundedBold.ttf') format('truetype');
-	size-adjust: 100%;
+  font-family: "George Regular";
+  src: url("../../public/static/fonts/GeorgeRoundedRegular.ttf")
+    format("truetype");
+  size-adjust: 100%;
+}
+
+@font-face {
+  font-family: "George Bold";
+  src: url("../../public/static/fonts/GeorgeRoundedBold.ttf") format("truetype");
+  size-adjust: 100%;
 }
 
 input {
-	background-color: var(--primary-color);
-	filter: brightness(80%);
-	border: solid 2px var(--secondary-color);
-	border-radius: 15px;
-	font-family: 'Sidebar';
-	padding: 10px;
-	color: #ffffff;
+  background-color: var(--primary-color);
+  filter: brightness(80%);
+  border: solid 2px var(--secondary-color);
+  border-radius: 15px;
+  font-family: "Sidebar";
+  padding: 10px;
+  color: #ffffff;
 }
 
 button {
-	background-color: var(--secondary-color);
-	color: var(--primary-color);
-	font-family: 'George Bold';
-	border-radius: 20px;
-	font-size: clamp(10px, 1.25vw, 20px);
-	width: clamp(76px, 11.875vw, 152px);
-	height: clamp(42px, 4.84vh, 62px);
-	transition: 0.2s;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  font-family: "George Bold";
+  border-radius: 20px;
+  font-size: clamp(10px, 1.25vw, 20px);
+  width: clamp(76px, 11.875vw, 152px);
+  height: clamp(42px, 4.84vh, 62px);
+  transition: 0.2s;
 }
 
 button:hover {
-	background-color: var(--tertiary-color);
-	transform: scale(1.05);
+  background-color: var(--tertiary-color);
+  transform: scale(1.05);
 }
+
