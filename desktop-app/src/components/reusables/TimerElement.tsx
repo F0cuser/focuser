@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useRef} from "react";
 import { useDispatch, useSelector } from 'react-redux'
 
 
@@ -12,25 +12,29 @@ import { setTimer } from "../../utils/reducers/timer";
 const TimerElement = () => {
   let timer = useSelector((state: RootState) => state.timer.timer);
   const dispatch = useDispatch();
-  let interval: number | undefined;
+  const intervalRef = useRef(0);
 
 
   const onTimerAdjustPress = (digitType: string, timeToAdd: number) => {
-    interval = window.setInterval(() => {updateTime(digitType, timeToAdd)}, 200)
+    if (intervalRef.current) return; 
+    intervalRef.current = window.setInterval(() => {updateTime(digitType, timeToAdd)}, 100)
   }
 
   const stopTimerAdjust = () => {
-    window.clearInterval(interval);
-    interval = undefined
-    console.log(interval)
+    window.clearInterval(intervalRef.current);
+    intervalRef.current = 0
   }
 
 
 
   const updateTime = (digitType: string, timeToAdd: number) => {
     const prevValue = timer[digitType];
-    if ((prevValue === 0 && timeToAdd < 0) || (digitType !== 'hours' && prevValue === 59 && timeToAdd < 0)) return;
-    timer = {...timer, [digitType]: timer[digitType] + timeToAdd}
+    if ((prevValue === 0 && timeToAdd < 0) || (digitType !== 'hours' && prevValue === 59 && timeToAdd > 0)) {
+      timer = {...timer, [digitType]: 0}
+    }
+    else {
+      timer = {...timer, [digitType]: timer[digitType] + timeToAdd}
+    }
     dispatch(setTimer(timer))
   }
 
