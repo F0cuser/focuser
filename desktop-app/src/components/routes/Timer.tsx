@@ -36,7 +36,7 @@ const Timer = () => {
     ) {
       timerHook[digitType] = 0;
     } else {
-      timerHook[digitType] += 1;
+      timerHook[digitType] += timeToAdd;
     }
     const newTime = convertSelectionToDateObj({
       hours: timerHook.hours,
