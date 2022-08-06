@@ -1,56 +1,28 @@
 import React, { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useTimer } from "react-timer-hook";
-
 import styles from "./TimerElement.module.css";
-
 import upArrowPath from "../../../public/static/images/up-arrow.svg";
 import downArrowPath from "../../../public/static/images/down-arrow.svg";
+import { useSelector } from "react-redux";
 import { RootState } from "../../utils/store";
-import { setTimer } from "../../utils/reducers/timer";
-
-const TimerElement = () => {
-  
-  const convertSelectionToDateObj = (timerSelection: {[key:string]: number}): Date => {
-    const time = new Date();
-    time.setSeconds(time.getSeconds() + timerSelection.seconds);
-    time.setMinutes(time.getMinutes() + timerSelection.minutes);
-    time.setHours(time.getHours() + timerSelection.hours);
-    return time;
-  };
 
 
-  let timer = useSelector((state: RootState) => state.timer.timer);
-  const timerHook = useTimer({
-    autoStart: false,
-    expiryTimestamp: convertSelectionToDateObj(timer),
-  });
-  const dispatch = useDispatch();
+const TimerElement = (props: {
+  updateTime: (arg0: string, arg1: number) => void;
+  timer: { [key: string]: any };
+}) => {
   const intervalRef = useRef(0);
-
+  const isTimerActive = useSelector((state: RootState) => state.timer.isActive);
   const onTimerAdjustPress = (digitType: string, timeToAdd: number) => {
+    props.updateTime(digitType, timeToAdd);
     if (intervalRef.current) return;
     intervalRef.current = window.setInterval(() => {
-      updateTime(digitType, timeToAdd);
+      props.updateTime(digitType, timeToAdd);
     }, 100);
   };
 
   const stopTimerAdjust = () => {
     window.clearInterval(intervalRef.current);
     intervalRef.current = 0;
-  };
-
-  const updateTime = (digitType: string, timeToAdd: number) => {
-    const prevValue = timer[digitType];
-    if (
-      (prevValue === 0 && timeToAdd < 0) ||
-      (digitType !== "hours" && prevValue === 59 && timeToAdd > 0)
-    ) {
-      timer = { ...timer, [digitType]: 0 };
-    } else {
-      timer = { ...timer, [digitType]: timer[digitType] + timeToAdd };
-    }
-    dispatch(setTimer(timer));
   };
 
   return (
@@ -64,16 +36,18 @@ const TimerElement = () => {
           className={`${styles.upButton} ${styles.timerAdjust} mb-2`}
           onMouseUp={stopTimerAdjust}
           onMouseDown={() => onTimerAdjustPress("hours", 1)}
+          disabled={isTimerActive}
         >
           <img className={`${styles.buttonImage}`} src={upArrowPath} alt="up" />
         </button>
         <h1 className={`${styles.digits} mt-2`} id="hoursDigits">
-          {timer.hours.toString().padStart(2, "0")}
+          {props.timer.hours.toString().padStart(2, "0")}
         </h1>
         <button
           className={`${styles.downButton} ${styles.timerAdjust}`}
           onMouseUp={stopTimerAdjust}
           onMouseDown={() => onTimerAdjustPress("hours", -1)}
+          disabled={isTimerActive}
         >
           <img
             className={`${styles.buttonImage}`}
@@ -90,16 +64,18 @@ const TimerElement = () => {
           className={`${styles.upButton} ${styles.timerAdjust} mb-2`}
           onMouseUp={stopTimerAdjust}
           onMouseDown={() => onTimerAdjustPress("minutes", 1)}
+          disabled={isTimerActive}
         >
           <img className={`${styles.buttonImage}`} src={upArrowPath} alt="up" />
         </button>
         <h1 className={`${styles.digits} mt-2`} id="minutesDigits">
-          {timer.minutes.toString().padStart(2, "0")}
+          {props.timer.minutes.toString().padStart(2, "0")}
         </h1>
         <button
           className={`${styles.downButton} ${styles.timerAdjust}`}
           onMouseUp={stopTimerAdjust}
           onMouseDown={() => onTimerAdjustPress("minutes", -1)}
+          disabled={isTimerActive}
         >
           <img
             className={`${styles.buttonImage}`}
@@ -116,16 +92,18 @@ const TimerElement = () => {
           className={`${styles.upButton} ${styles.timerAdjust} mb-2`}
           onMouseUp={stopTimerAdjust}
           onMouseDown={() => onTimerAdjustPress("seconds", 1)}
+          disabled={isTimerActive}
         >
           <img className={`${styles.buttonImage}`} src={upArrowPath} alt="up" />
         </button>
         <h1 className={`${styles.digits} mt-2`} id="secondsDigits">
-          {timer.seconds.toString().padStart(2, "0")}
+          {props.timer.seconds.toString().padStart(2, "0")}
         </h1>
         <button
           className={`${styles.downButton} ${styles.timerAdjust}`}
           onMouseUp={stopTimerAdjust}
           onMouseDown={() => onTimerAdjustPress("seconds", -1)}
+          disabled={isTimerActive}
         >
           <img
             className={`${styles.buttonImage}`}
