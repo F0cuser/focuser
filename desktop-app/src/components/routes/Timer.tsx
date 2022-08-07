@@ -4,8 +4,7 @@ import styles from "./Timer.module.css";
 import TimerElement from "../reusables/TimerElement";
 import TimerToggleButton from "../reusables/TimerToggleButton";
 import { useTimer } from "react-timer-hook";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../utils/store";
+import { useDispatch } from "react-redux";
 import { toggleActive } from "../../utils/reducers/timer";
 
 const Timer = () => {

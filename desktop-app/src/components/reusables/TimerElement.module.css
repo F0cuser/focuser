@@ -14,6 +14,10 @@
     cursor: wait;
 }
 
+.timerAdjust:disabled {
+    cursor: wait;
+}
+
 .digits, .separator {
     font-size: clamp(64px, 10vw, 128px);
     color: #f1f1f1;

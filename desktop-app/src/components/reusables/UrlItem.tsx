@@ -1,5 +1,6 @@
 import React from "react";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from "../../utils/store";
 
 import { openModal } from "../../utils/reducers/modal";
 import toast from "react-hot-toast";
@@ -13,8 +14,9 @@ import { removeUrl } from "../../utils/reducers/urls";
 
 const UrlItem = (props: { addItem?: boolean, url?: string }) => {
 
+  const isTimerActive = useSelector((state: RootState) => state.timer.isActive);
   const removeUrlItem = () => {
-    dispatch(removeUrl(props.url));
+    dispatch(removeUrl({'url': props.url, 'timerActive': isTimerActive}));
     toast.success(`Successfully removed ${props.url}!`)
   }
   const dispatch = useDispatch();

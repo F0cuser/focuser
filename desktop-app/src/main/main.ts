@@ -50,7 +50,7 @@ const createWindow = () => {
 
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {
-    winregEditor.deletePacServer();
+    winregEditor.disablePacServer();
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -60,12 +60,10 @@ const createWindow = () => {
 
 const startPacServer = async () => {
   await pacServer.startServer();
-  winregEditor.setPacServer(pacServer.port);
 };
 
 const restartPacServer = async () => {
   await pacServer.restartServer();
-  winregEditor.setPacServer(pacServer.port);
 }
 
 const initializeApp = () => {
@@ -113,5 +111,14 @@ ipcMain.handle(channels.READ_SETTINGS, async (_, args) => {
 ipcMain.handle(channels.WRITE_URLS, async (_, args) => {
   settingsStore.set(args.key, args.value);
   PacServer.buildPacFile(19090, args.value);
-  restartPacServer();
+  if (args.timerActive)
+    restartPacServer();
 });
+
+ipcMain.handle(channels.START_PAC, async (_, __) => {
+  winregEditor.setPacServer(pacServer.port);
+})
+
+ipcMain.handle(channels.STOP_PAC, async (_, __) => {
+  winregEditor.disablePacServer();
+})

@@ -22,7 +22,7 @@ class WindowsRegistryEditor {
         return WindowsRegistryEditor.instance;
     }
     
-    public deletePacServer() {
+    public disablePacServer() {
         Logger.info("Disabling proxy in Windows Registry");
         this.regKey.remove('AutoConfigUrl', () => {;})
     }

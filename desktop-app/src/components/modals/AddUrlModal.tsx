@@ -10,6 +10,7 @@ import styles from "./AddUrlModal.module.css";
 const AddUrl = () => {
   const dispatch = useDispatch();
   const urls = [...useSelector((state: RootState) => state.urls.urls)];
+  const isTimerActive = useSelector((state: RootState) => state.timer.isActive);
 
   useEffect(() => document.getElementById('addUrlInput')?.focus(), [])
 
@@ -22,7 +23,7 @@ const AddUrl = () => {
       return;
     }
     urls.push(newUrl);
-    dispatch(setUrls(urls));
+    dispatch(setUrls({'urls': urls, 'timerActive': isTimerActive}));
     toast.success(`${newUrl} has been successfully added!`);
     document.getElementById('addUrlInput')?.focus()
     if (shouldClose) {
