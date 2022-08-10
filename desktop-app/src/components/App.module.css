@@ -189,7 +189,7 @@ body {
   size-adjust: 100%;
 }
 
-input {
+input[type=text] {
   background-color: var(--primary-color);
   filter: brightness(80%);
   border: solid 2px var(--secondary-color);

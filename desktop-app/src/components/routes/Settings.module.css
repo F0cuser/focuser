@@ -1,0 +1,12 @@
+.settingsWrapper {
+    padding: 6.5%;
+    margin-left: 15.625vw;
+
+}
+
+
+.settingsHeader {
+    margin-top: clamp(150px, 27vh, 300px);
+    font-family: "Header";
+    color: var(--tertiary-color);
+}

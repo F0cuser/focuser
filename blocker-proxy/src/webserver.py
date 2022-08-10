@@ -3,25 +3,27 @@ import ssl
 import threading
 import certcreator
 import logging
+import sys
 
 
 logging.basicConfig(filename='focuser_webserver.log', encoding='utf-8', level=logging.DEBUG)
 
-
-LISTENER_PORT = 19090
+if len(sys.argv < 2):
+    print("USAGE: python webserver.py <LISTENER PORT>")
+    exit()
+LISTENER_PORT = sys.argv[1]
 BUFFER_SIZE = 4096
 
 
 def handle(conn: socket.socket):
     request = conn.recv(BUFFER_SIZE)
-    print(request)
     method = request.decode('utf-8').split(' ')[0]
     host = request.decode('utf-8').split(' ')[1].split(':')[0]
     if method == 'CONNECT':
         handle_https(conn, host)
     else:
         handle_http(conn)
-    logging.info("Proxied")
+    logging.info("Proxied", host)
 
 
 def handle_https(conn: socket.socket, host: str):
