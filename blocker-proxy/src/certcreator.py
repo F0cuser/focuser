@@ -70,7 +70,7 @@ def get_certpair_for_host(hostname: str) -> Tuple[tempfile._TemporaryFileWrapper
         tuple(tempfile._TemporaryFileWrapper): Files that can be safely deleted later.
     """
 
-    ca_cert, ca_key = load_ca_pair('../certs/focuser.crt', '../certs/focuser.key')
+    ca_cert, ca_key = load_ca_pair('./focuser.crt', './focuser.key')
 
     key = PKey()
     cert = X509()

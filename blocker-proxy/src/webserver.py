@@ -8,10 +8,10 @@ import sys
 
 logging.basicConfig(filename='focuser_webserver.log', encoding='utf-8', level=logging.DEBUG)
 
-if len(sys.argv < 2):
+if len(sys.argv) < 2:
     print("USAGE: python webserver.py <LISTENER PORT>")
-    exit()
-LISTENER_PORT = sys.argv[1]
+    exit(1)
+LISTENER_PORT = int(sys.argv[1])
 BUFFER_SIZE = 4096
 
 
