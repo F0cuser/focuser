@@ -23,13 +23,13 @@ class WindowsRegistryEditor {
     }
     
     public disablePacServer() {
-        Logger.info("Disabling proxy in Windows Registry");
+        Logger.info("[+] Disabling proxy in Windows Registry");
         this.regKey.remove('AutoConfigUrl', () => {;})
     }
     
     public setPacServer(pacServerPort: number) {
         const registryValue = `http://127.0.0.1:${pacServerPort}/proxy.pac`
-        Logger.info(`Setting PAC server in Windows Registry to: ${registryValue}`);
+        Logger.info(`[+] Setting PAC server in Windows Registry to: ${registryValue}`);
         this.regKey.set('AutoConfigUrl', Registry.REG_SZ, registryValue, () => {;})
     }
 

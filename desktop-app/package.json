@@ -40,6 +40,7 @@
     "fs": "^0.0.1-security",
     "http-proxy": "^1.18.1",
     "path": "^0.12.7",
+    "portfinder": "^1.0.29",
     "react": "^17.0.0",
     "react-bootstrap": "^2.4.0",
     "react-burger-menu": "^3.0.8",

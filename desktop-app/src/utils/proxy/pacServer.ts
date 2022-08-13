@@ -28,7 +28,7 @@ class PacServer {
     return new Promise<void>((resolve, _) =>
       this.server.listen(0, () => {
         this.port = (this.server.address() as AddressInfo).port;
-        Logger.info(`PAC Server listening on ${this.port}!`);
+        Logger.info(`[+] PAC Server listening on ${this.port}!`);
         resolve();
       }),
     );
@@ -41,7 +41,7 @@ class PacServer {
   }
 
   public restartServer(): Promise<void> {
-    Logger.info("Restarting PAC server...");
+    Logger.info("[+] Restarting PAC server...");
     return new Promise<void>((resolve, _) => {
       this.server.close(() => {
         this.startServer().then(() => resolve());
@@ -68,7 +68,7 @@ function FindProxyForURL(url, host) {
     return 'DIRECT'
 }    
 `;
-    Logger.info(`New PAC Script file: \n${PacServer.pacScript}`)
+    Logger.info(`[+] New PAC Script file URLs: ${urls}`)
   }
 
   static getInstance(): PacServer {

@@ -4,6 +4,7 @@ import Logger from "../utils/fileLogger";
 import WindowsRegistryEditor from "../utils/windowsRegistryEditor";
 import { channels } from "../utils/shared/constants";
 import { Store } from "../utils/settingsInterface";
+import ProxyServerController from "../utils/proxy/proxyServerController";
 
 declare global {
   const MAIN_WINDOW_WEBPACK_ENTRY: string;
@@ -12,6 +13,7 @@ declare global {
 export const pacServer: PacServer = PacServer.getInstance();
 const winregEditor: WindowsRegistryEditor = WindowsRegistryEditor.getInstance();
 const settingsStore = new Store({ configName: "focuser", defaults: [] });
+const proxyServerController: ProxyServerController = ProxyServerController.getInstance(__dirname + '../utils/proxy/proxyServer.exe', ProxyServerController.getPortFromConfiguration(settingsStore));
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -51,6 +53,7 @@ const createWindow = () => {
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {
     winregEditor.disablePacServer();
+    proxyServerController.stopServer();
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -67,8 +70,8 @@ const restartPacServer = async () => {
 }
 
 const initializeApp = () => {
-  Logger.info("STARTED");
-  PacServer.buildPacFile(19090);
+  proxyServerController.startServer(settingsStore);
+  PacServer.buildPacFile(proxyServerController.port);
   startPacServer();
   createWindow();
 };
