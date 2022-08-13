@@ -3,6 +3,7 @@ import Store from "../settingsInterface";
 import portFinder from 'portfinder'
 
 import Logger from "../fileLogger";
+import PacServer from "./pacServer";
 
 const MIN_PROXY_PORT = 10000;
 class ProxyServerController {
@@ -10,16 +11,20 @@ class ProxyServerController {
   static instance: ProxyServerController;
   public executablePath: string;
   private serverProcess: ChildProcess;
+  private pacServer: PacServer
 
   private constructor(port: number, executablePath: string) {
     this.port = port;
     this.executablePath = executablePath;
+    this.pacServer = PacServer.getInstance();
   }
 
   private async setRandomPort(configStore: typeof Store): Promise<void> {
     this.port = await portFinder.getPortPromise({port: MIN_PROXY_PORT});
     ProxyServerController.setPortInConfiguration(configStore, this.port)
     Logger.info("[+] Proxy port set automatically to ", this.port)
+    PacServer.buildPacFile(this.port)
+    this.pacServer.restartServer();
   }
 
   public async startServer(configStore: typeof Store): Promise<void> {
