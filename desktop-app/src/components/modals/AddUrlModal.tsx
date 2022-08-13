@@ -35,6 +35,7 @@ const AddUrl = () => {
     <React.Fragment>
       <h1 className={`${styles.modalHeader} mt-2`}>Add URL</h1>
       <input
+        type="text"
         className={`${styles.addUrlInput}`}
         placeholder="e.g. annoying-website.com"
         id="addUrlInput"

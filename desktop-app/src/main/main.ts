@@ -1,10 +1,10 @@
 import { app, BrowserWindow, session, ipcMain } from "electron";
 import PacServer from "../utils/proxy/pacServer";
-import Logger from "../utils/fileLogger";
 import WindowsRegistryEditor from "../utils/windowsRegistryEditor";
 import { channels } from "../utils/shared/constants";
 import { Store } from "../utils/settingsInterface";
 import ProxyServerController from "../utils/proxy/proxyServerController";
+import path from "path";
 
 declare global {
   const MAIN_WINDOW_WEBPACK_ENTRY: string;
@@ -13,7 +13,11 @@ declare global {
 export const pacServer: PacServer = PacServer.getInstance();
 const winregEditor: WindowsRegistryEditor = WindowsRegistryEditor.getInstance();
 const settingsStore = new Store({ configName: "focuser", defaults: [] });
-const proxyServerController: ProxyServerController = ProxyServerController.getInstance(__dirname + '../utils/proxy/proxyServer.exe', ProxyServerController.getPortFromConfiguration(settingsStore));
+const proxyServerController: ProxyServerController =
+  ProxyServerController.getInstance(
+    path.join(__dirname, "../utils/proxy/proxyServer.exe"),
+    ProxyServerController.getPortFromConfiguration(settingsStore),
+  );
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -67,7 +71,7 @@ const startPacServer = async () => {
 
 const restartPacServer = async () => {
   await pacServer.restartServer();
-}
+};
 
 const initializeApp = () => {
   proxyServerController.startServer(settingsStore);
@@ -114,14 +118,13 @@ ipcMain.handle(channels.READ_SETTINGS, async (_, args) => {
 ipcMain.handle(channels.WRITE_URLS, async (_, args) => {
   settingsStore.set(args.key, args.value);
   PacServer.buildPacFile(19090, args.value);
-  if (args.timerActive)
-    restartPacServer();
+  if (args.timerActive) restartPacServer();
 });
 
 ipcMain.handle(channels.START_PAC, async (_, __) => {
   winregEditor.setPacServer(pacServer.port);
-})
+});
 
 ipcMain.handle(channels.STOP_PAC, async (_, __) => {
   winregEditor.disablePacServer();
-})
+});
