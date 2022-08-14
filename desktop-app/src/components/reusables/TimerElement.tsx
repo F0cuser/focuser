@@ -8,8 +8,8 @@ import { RootState } from "../../utils/store";
 
 const TimerElement = (props: {
   updateTime: (arg0: string, arg1: number) => void;
-  timer: { [key: string]: any };
 }) => {
+  const timerState = useSelector((state: RootState) => state.timer.timer);
   const intervalRef = useRef(0);
   const isTimerActive = useSelector((state: RootState) => state.timer.isActive);
   const onTimerAdjustPress = (digitType: string, timeToAdd: number) => {
@@ -17,7 +17,7 @@ const TimerElement = (props: {
     if (intervalRef.current) return;
     intervalRef.current = window.setInterval(() => {
       props.updateTime(digitType, timeToAdd);
-    }, 100);
+    }, 300);
   };
 
   const stopTimerAdjust = () => {
@@ -41,7 +41,7 @@ const TimerElement = (props: {
           <img className={`${styles.buttonImage}`} src={upArrowPath} alt="up" />
         </button>
         <h1 className={`${styles.digits} mt-2`} id="hoursDigits">
-          {props.timer.hours.toString().padStart(2, "0")}
+          {timerState.hours.toString().padStart(2, "0")}
         </h1>
         <button
           className={`${styles.downButton} ${styles.timerAdjust}`}
@@ -69,7 +69,7 @@ const TimerElement = (props: {
           <img className={`${styles.buttonImage}`} src={upArrowPath} alt="up" />
         </button>
         <h1 className={`${styles.digits} mt-2`} id="minutesDigits">
-          {props.timer.minutes.toString().padStart(2, "0")}
+          {timerState.minutes.toString().padStart(2, "0")}
         </h1>
         <button
           className={`${styles.downButton} ${styles.timerAdjust}`}
@@ -97,7 +97,7 @@ const TimerElement = (props: {
           <img className={`${styles.buttonImage}`} src={upArrowPath} alt="up" />
         </button>
         <h1 className={`${styles.digits} mt-2`} id="secondsDigits">
-          {props.timer.seconds.toString().padStart(2, "0")}
+          {timerState.seconds.toString().padStart(2, "0")}
         </h1>
         <button
           className={`${styles.downButton} ${styles.timerAdjust}`}

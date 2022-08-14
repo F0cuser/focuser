@@ -6,7 +6,8 @@ const { ipcRenderer } = window.require("electron");
 export const timerReducer = createSlice({
     name: 'timer',
     initialState: {
-        isActive: false
+        isActive: false,
+        timer: {hours: 0, minutes: 0, seconds: 0}
     },
     reducers: {
         toggleActive: (state) => {
@@ -16,8 +17,12 @@ export const timerReducer = createSlice({
 
         },
 
+        setTimer: (state, action) => {
+            state.timer = action.payload;
+        }
+
     }
 })
 
-export const {toggleActive} = timerReducer.actions;
+export const {toggleActive, setTimer} = timerReducer.actions;
 export default timerReducer.reducer;
