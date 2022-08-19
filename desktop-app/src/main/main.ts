@@ -1,4 +1,12 @@
-import { app, BrowserWindow, session, ipcMain, Tray, Menu } from "electron";
+import {
+  app,
+  BrowserWindow,
+  session,
+  ipcMain,
+  Tray,
+  Menu,
+  Notification,
+} from "electron";
 import PacServer from "../utils/proxy/pacServer";
 import WindowsRegistryEditor from "../utils/windowsRegistryEditor";
 import { channels } from "../utils/shared/constants";
@@ -10,7 +18,18 @@ declare global {
   const MAIN_WINDOW_WEBPACK_ENTRY: string;
 }
 
+if (process.platform === 'win32')
+{
+    app.setAppUserModelId(app.name)
+}
+
 export const pacServer: PacServer = PacServer.getInstance();
+let isQuitting = false;
+let firstTimeMinimize = true;
+const ICON_PATH = path.join(
+  __dirname,
+  "../../public/static/images/trayIcon.ico",
+);
 const winregEditor: WindowsRegistryEditor = WindowsRegistryEditor.getInstance();
 const settingsStore = new Store({ configName: "focuser", defaults: [] });
 const proxyServerController: ProxyServerController =
@@ -43,6 +62,7 @@ let mainWindow: null | BrowserWindow;
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
+    icon: ICON_PATH,
     width: 1280,
     height: 720,
     autoHideMenuBar: true,
@@ -55,6 +75,16 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
+  mainWindow.on("minimize", (event: Event) => {
+    minimizeToTray(event);
+  });
+
+  mainWindow.on("close", (event: Event) => {
+    if (!isQuitting) {
+      minimizeToTray(event);
+    }
+  });
+
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {
     winregEditor.disablePacServer();
@@ -66,15 +96,40 @@ const createWindow = () => {
   });
 };
 
+const minimizeToTray = (event: Event) => {
+  event.preventDefault();
+  mainWindow?.hide();
+  if (firstTimeMinimize) {
+    const notification = new Notification({
+      title: "Focuser is still running",
+      body: "You can still open the app from the system tray!",
+      silent: true,
+      icon: ICON_PATH,
+    })
+    notification.on('click', () => mainWindow?.show())
+    notification.show();
+  }
+
+  firstTimeMinimize = false;
+};
+
 const createTrayIcon = () => {
-  const appIcon = new Tray(
-    path.join(__dirname, "../../public/static/images/trayIcon.ico"),
-  );
+  const appIcon = new Tray(ICON_PATH);
   const contextMenu = Menu.buildFromTemplate([
-    { label: "Item1", type: "radio" },
-    { label: "Item2", type: "radio" },
+    {
+      label: "Quit",
+      click: () => {
+        isQuitting = true;
+        app.quit();
+      },
+    },
   ]);
   appIcon.setContextMenu(contextMenu);
+  appIcon.setTitle("Focuser");
+
+  appIcon.on("click", () => {
+    mainWindow?.show();
+  });
 };
 
 const startPacServer = async () => {
@@ -129,8 +184,13 @@ ipcMain.handle(channels.READ_SETTINGS, async (_, args) => {
 
 ipcMain.handle(channels.WRITE_URLS, async (_, args) => {
   settingsStore.set(args.key, args.value);
-  PacServer.buildPacFile(19090, args.value);
-  if (args.timerActive) restartPacServer();
+  PacServer.buildPacFile(proxyServerController.port, args.value);
+  if (args.timerActive) {
+    restartPacServer().then(() => {
+      winregEditor.disablePacServer();
+      winregEditor.setPacServer(pacServer.port);
+    });
+  }
 });
 
 ipcMain.handle(channels.START_PAC, async (_, __) => {

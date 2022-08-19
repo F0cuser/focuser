@@ -38,7 +38,14 @@ class ProxyServerController {
 
   private killServerProcess() {
     for (const procId of this.serverProcessPids) {
-      process.kill(procId, 'SIGTERM');
+      try {
+        process.kill(procId, 'SIGTERM');
+      }
+      catch (error) {
+        if (!error.message.includes('ESRCH')) {
+          Logger.error(error.message);
+        }
+      }
     }
   }
 
@@ -53,15 +60,11 @@ class ProxyServerController {
       [this.port.toString()],
       { windowsHide: true },
       async (error, stdout, stderr) => {
-        if (error)
-          Logger.error("[-] Failed running the proxy EXE file: ", error);
-          this.killServerProcess()
-        if (stderr.includes('[WinError 10048]')) {
-          Logger.error(`[-] STDERR from EXE file: ${stderr} \n\n[*] Restarting server with a new port...`)
+        if (error?.message.includes('[WinError 10048]') || stderr.includes('[WinError 10048]'))
+          Logger.error("[-] Port is already taken, re-launching proxy server", error);
           await this.setRandomPort(configStore)
           this.killServerProcess()
           this.startServer(configStore)
-        }
         Logger.info(stdout)
       },
     );
@@ -72,7 +75,7 @@ class ProxyServerController {
   public stopServer(): void {
     const previousPid = this.serverProcessPids;
     this.killServerProcess();
-    Logger.info(`[+] Stopped proxy server, PID was ${previousPid}`);
+    Logger.info(`[+] Stopped proxy server, PIDs were ${previousPid}`);
   }
 
 
