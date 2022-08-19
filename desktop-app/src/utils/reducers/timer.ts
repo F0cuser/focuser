@@ -10,10 +10,15 @@ export const timerReducer = createSlice({
         timer: {hours: 0, minutes: 0, seconds: 0}
     },
     reducers: {
-        toggleActive: (state) => {
+        toggleActive: (state, action) => {
             state.isActive = !state.isActive;
             if (state.isActive) ipcRenderer.invoke(channels.START_PAC);
-            else ipcRenderer.invoke(channels.STOP_PAC);
+            else {
+                ipcRenderer.invoke(channels.STOP_PAC);
+                if (action.payload.isFinished) {
+                    ipcRenderer.invoke(channels.FINISH_TIMER);
+                }
+            } 
 
         },
 

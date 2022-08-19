@@ -1,8 +1,8 @@
 import React, { forwardRef, useEffect, useImperativeHandle } from "react";
 import { useTimer } from "react-timer-hook";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toggleActive, setTimer } from "../../utils/reducers/timer";
-import { RootState } from "../../utils/store";
+
 
 const BackgroundTimer = forwardRef((_, ref) => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const BackgroundTimer = forwardRef((_, ref) => {
     autoStart: false,
     expiryTimestamp: new Date(),
     onExpire: () => {
-      dispatch(toggleActive());
+      dispatch(toggleActive({isFinished: true}));
     },
   }) as { [key: string]: any };
 

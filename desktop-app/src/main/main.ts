@@ -200,3 +200,9 @@ ipcMain.handle(channels.START_PAC, async (_, __) => {
 ipcMain.handle(channels.STOP_PAC, async (_, __) => {
   winregEditor.disablePacServer();
 });
+
+ipcMain.handle(channels.FINISH_TIMER, () => {
+  const notification = new Notification({title: 'Time\'s Up!', body: 'If you want to restart the timer, now\'s the time to do it!', icon: ICON_PATH});
+  notification.on('click', () => mainWindow?.show());
+  notification.show();
+})
