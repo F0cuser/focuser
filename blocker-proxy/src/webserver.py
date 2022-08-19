@@ -2,11 +2,7 @@ import socket
 import ssl
 import threading
 import certcreator
-import logging
 import sys
-
-
-logging.basicConfig(filename='focuser_webserver.log', encoding='utf-8', level=logging.DEBUG)
 
 if len(sys.argv) < 2:
     print("USAGE: python webserver.py <LISTENER PORT>")
@@ -23,7 +19,7 @@ def handle(conn: socket.socket):
         handle_https(conn, host)
     else:
         handle_http(conn)
-    logging.info("Proxied", host)
+    print("Proxied", host)
 
 
 def handle_https(conn: socket.socket, host: str):
@@ -46,7 +42,7 @@ def main():
     print(f"LISTENING ON {LISTENER_PORT}")
     while True:
         conn, _ = sock.accept()
-        logging.info(f"Got a connection from the user")
+        print(f"Got a connection from the user")
         thread = threading.Thread(target=handle, args=(conn,))
         thread.start()
         thread.join()

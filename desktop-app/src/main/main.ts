@@ -1,4 +1,4 @@
-import { app, BrowserWindow, session, ipcMain } from "electron";
+import { app, BrowserWindow, session, ipcMain, Tray, Menu } from "electron";
 import PacServer from "../utils/proxy/pacServer";
 import WindowsRegistryEditor from "../utils/windowsRegistryEditor";
 import { channels } from "../utils/shared/constants";
@@ -26,6 +26,7 @@ if (require("electron-squirrel-startup")) {
 }
 
 app.whenReady().then(() => {
+  createTrayIcon();
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     callback({
       responseHeaders: {
@@ -63,6 +64,17 @@ const createWindow = () => {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+};
+
+const createTrayIcon = () => {
+  const appIcon = new Tray(
+    path.join(__dirname, "../../public/static/images/trayIcon.ico"),
+  );
+  const contextMenu = Menu.buildFromTemplate([
+    { label: "Item1", type: "radio" },
+    { label: "Item2", type: "radio" },
+  ]);
+  appIcon.setContextMenu(contextMenu);
 };
 
 const startPacServer = async () => {

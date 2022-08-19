@@ -1,4 +1,4 @@
-import { ChildProcess, execFile } from "child_process";
+import { ChildProcess, execFile, spawn } from "child_process";
 import Store from "../settingsInterface";
 import portFinder from 'portfinder'
 import processFinder from 'find-process'
@@ -12,7 +12,7 @@ class ProxyServerController {
   public port: number;
   static instance: ProxyServerController;
   public executablePath: string;
-  private serverProcessPid: number;
+  private serverProcessPids: number[];
   private pacServer: PacServer
 
   private constructor(port: number, executablePath: string) {
@@ -29,16 +29,17 @@ class ProxyServerController {
       this.pacServer.restartServer();
   }
 
-  private getCreatedProcessPid() {
+  private getCreatedProcessPids() {
     processFinder('name', basename(this.executablePath)).then(foundProcesses => {
-      const wantedProcess = foundProcesses.sort((a, b) => b.pid - a.pid)[0]
-      this.serverProcessPid = wantedProcess.pid
-      Logger.info(`[+] Proxy server PID is ${this.serverProcessPid}`)
+      this.serverProcessPids = foundProcesses.map((proc) => proc.pid)
+      Logger.info(`[+] Proxy server PIDs are ${this.serverProcessPids}`)
     })
   }
 
   private killServerProcess() {
-    process.kill(this.serverProcessPid, 'SIGTERM');
+    for (const procId of this.serverProcessPids) {
+      process.kill(procId, 'SIGTERM');
+    }
   }
 
   public async startServer(configStore: typeof Store): Promise<void> {
@@ -51,7 +52,7 @@ class ProxyServerController {
       this.executablePath,
       [this.port.toString()],
       { windowsHide: true },
-      async (error, _, stderr) => {
+      async (error, stdout, stderr) => {
         if (error)
           Logger.error("[-] Failed running the proxy EXE file: ", error);
           this.killServerProcess()
@@ -61,14 +62,15 @@ class ProxyServerController {
           this.killServerProcess()
           this.startServer(configStore)
         }
+        Logger.info(stdout)
       },
     );
     Logger.info('[+] Started proxy server');
-    this.getCreatedProcessPid();
+    this.getCreatedProcessPids();
   }
 
   public stopServer(): void {
-    const previousPid = this.serverProcessPid;
+    const previousPid = this.serverProcessPids;
     this.killServerProcess();
     Logger.info(`[+] Stopped proxy server, PID was ${previousPid}`);
   }
