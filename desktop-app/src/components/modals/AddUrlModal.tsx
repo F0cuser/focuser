@@ -12,41 +12,61 @@ const AddUrl = () => {
   const urls = [...useSelector((state: RootState) => state.urls.urls)];
   const isTimerActive = useSelector((state: RootState) => state.timer.isActive);
 
-  useEffect(() => document.getElementById('addUrlInput')?.focus(), [])
+  useEffect(() => {
+    setupKeypressListeners();
+    document.getElementById("addUrlInput")?.focus();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
+  const setupKeypressListeners = () => {
+    document.addEventListener('keyup', (ev) => {
+      switch (ev.key) {
+        case 'Enter':
+          addUrlToList(false);
+          break;
+        case 'Escape':
+          dispatch(closeModal())
+          break;
+        default:
+          break;
+      }
+    })
+  };
   const addUrlToList = (shouldClose: boolean) => {
-    const urlInputElem: HTMLInputElement = document.getElementById("addUrlInput") as HTMLInputElement;
+    const urlInputElem: HTMLInputElement = document.getElementById(
+      "addUrlInput",
+    ) as HTMLInputElement;
     const newUrl: string = urlInputElem.value;
-    urlInputElem.value = '';
+    if (!newUrl) return;
+    urlInputElem.value = "";
     if (urls.includes(newUrl)) {
       toast.error(`${newUrl} already exists in your blocked URL list!`);
       return;
     }
-    urls.push(newUrl);
-    dispatch(setUrls({'urls': urls, 'timerActive': isTimerActive}));
+    dispatch(setUrls({ urls: [...urls, newUrl], timerActive: isTimerActive }));
     toast.success(`${newUrl} has been successfully added!`);
-    document.getElementById('addUrlInput')?.focus()
+    document.getElementById("addUrlInput")?.focus();
     if (shouldClose) {
-      dispatch(closeModal())
+      dispatch(closeModal());
     }
-  }
+  };
 
   return (
     <React.Fragment>
-      <h1 className={`${styles.modalHeader} mt-2`}>Add URL</h1>
-      <input
-        type="text"
-        className={`${styles.addUrlInput}`}
-        placeholder="e.g. annoying-website.com"
-        id="addUrlInput"
-        required
-      />
-      <div
-        className={`${styles.actionButtonsWrapper} d-flex justify-content-end gap-3`}
-      >
-        <button onClick={() => addUrlToList(false)}>Add Another</button>
-        <button onClick={() => addUrlToList(true)}>Finish</button>
-      </div>
+        <h1 className={`${styles.modalHeader} mt-2`}>Add URL</h1>
+        <input
+          type="text"
+          className={`${styles.addUrlInput}`}
+          placeholder="e.g. annoying-website.com"
+          id="addUrlInput"
+          required
+        />
+        <div
+          className={`${styles.actionButtonsWrapper} d-flex justify-content-end gap-3`}
+        >
+          <button onClick={() => addUrlToList(false)}>Add Another</button>
+          <button onClick={() => addUrlToList(true)}>Finish</button>
+        </div>
     </React.Fragment>
   );
 };
