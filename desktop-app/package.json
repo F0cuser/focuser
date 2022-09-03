@@ -11,7 +11,7 @@
     "appId": "com.electron.f0cuser",
     "nsis": {
       "oneClick": "false",
-      "allowToChangeInstal lationDirectory": "true"
+      "allowToChangeInstallationDirectory": "true"
     }
   },
   "bin": "./bin/setup.js",
@@ -35,9 +35,6 @@
   ],
   "author": "Lior Dahan",
   "license": "MIT",
-  "config": {
-    "forge": "./forge.config.js"
-  },
   "dependencies": {
     "@flaticon/flaticon-uicons": "^1.7.0",
     "@hot-loader/react-dom": "^17.0.1",
