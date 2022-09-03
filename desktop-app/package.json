@@ -7,6 +7,13 @@
     "type": "git",
     "url": "https://github.com/F0cuser/focuser.git"
   },
+  "build": {
+    "appId": "com.electron.f0cuser",
+    "nsis": {
+      "oneClick": "false",
+      "allowToChangeInstal lationDirectory": "true"
+    }
+  },
   "bin": "./bin/setup.js",
   "main": ".webpack/main",
   "scripts": {
@@ -15,7 +22,7 @@
     "gen-changelog": "npm run auto-changelog && git add CHANGELOG.md && git commit -m \"doc: change log\"",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make",
+    "make": "electron-builder build",
     "publishOnly": "electron-forge publish",
     "postpublish": "npm-run-all -s tag gen-changelog",
     "dev": "electron ."

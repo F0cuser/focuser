@@ -46,7 +46,7 @@ if (require("electron-squirrel-startup")) {
 
 app.whenReady().then(() => {
   createTrayIcon();
-  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+  session.defaultSession.webRequest.onHeadersReceived((details: { responseHeaders: any; }, callback: (arg0: { responseHeaders: any; }) => void) => {
     callback({
       responseHeaders: {
         ...details.responseHeaders,
@@ -173,7 +173,7 @@ app.on("activate", () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-ipcMain.handle(channels.READ_SETTINGS, async (_, args) => {
+ipcMain.handle(channels.READ_SETTINGS, async (_: any, args: any) => {
   const resultsToReturn = [];
   for (const arg of args) {
     const result = settingsStore.get(arg);
@@ -182,7 +182,7 @@ ipcMain.handle(channels.READ_SETTINGS, async (_, args) => {
   return resultsToReturn;
 });
 
-ipcMain.handle(channels.WRITE_URLS, async (_, args) => {
+ipcMain.handle(channels.WRITE_URLS, async (_: any, args: { key: string | number; value: string[] | undefined; timerActive: any; }) => {
   settingsStore.set(args.key, args.value);
   PacServer.buildPacFile(proxyServerController.port, args.value);
   if (args.timerActive) {
@@ -193,11 +193,11 @@ ipcMain.handle(channels.WRITE_URLS, async (_, args) => {
   }
 });
 
-ipcMain.handle(channels.START_PAC, async (_, __) => {
+ipcMain.handle(channels.START_PAC, async (_: any, __: any) => {
   winregEditor.setPacServer(pacServer.port);
 });
 
-ipcMain.handle(channels.STOP_PAC, async (_, __) => {
+ipcMain.handle(channels.STOP_PAC, async (_: any, __: any) => {
   winregEditor.disablePacServer();
 });
 

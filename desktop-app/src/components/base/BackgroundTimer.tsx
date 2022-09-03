@@ -35,7 +35,7 @@ const BackgroundTimer = forwardRef((_, ref) => {
     },
 
     toggleTimer() {
-      dispatch(toggleActive());
+      dispatch(toggleActive({isFinished: false}));
       if (timerHook.isRunning) timerHook.pause();
       else timerHook.resume();
     },

@@ -17,7 +17,7 @@ const TimerElement = (props: {
     if (intervalRef.current) return;
     intervalRef.current = window.setInterval(() => {
       props.updateTime(digitType, timeToAdd);
-    }, 300);
+    }, 150);
   };
 
   const stopTimerAdjust = () => {
