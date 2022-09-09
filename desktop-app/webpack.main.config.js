@@ -5,11 +5,8 @@ module.exports = {
    */
   entry: "./src/main/main.ts",
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".cer", ".key", ".css", ".module.css"],
-    fallback: {
-      fs: false,
-      path: false,
-    },
+    extensions: [".ts", ".tsx", ".js", ".cer", ".key", ".css", ".module.css"]
+
   },
 
   node: {

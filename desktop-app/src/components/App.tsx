@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { hot } from "react-hot-loader/root";
 import { Provider } from "react-redux";

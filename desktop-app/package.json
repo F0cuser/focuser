@@ -7,33 +7,15 @@
     "type": "git",
     "url": "https://github.com/F0cuser/focuser.git"
   },
-  "electronWebpack": {
-    "title": "F0cuser",
-    "staticSourceDirectory": "./public/static",
-    "main": {
-      "webpackConfig": "./webpack.main.config.js"
-    },
-    "renderer": {
-      "webpackConfig": "./webpack.renderer.config.js",
-      "template": "./public/index.html"
-    }
-  },
-  "build": {
-    "appId": "com.electron.f0cuser",
-    "nsis": {
-      "oneClick": "false",
-      "allowToChangeInstallationDirectory": "true"
-    }
-  },
   "bin": "./bin/setup.js",
   "main": ".webpack/main",
   "scripts": {
     "tag": "node ./config/tag.js",
     "auto-changelog": "auto-changelog --hide-credit --breaking-pattern \"breaking:\"",
     "gen-changelog": "npm run auto-changelog && git add CHANGELOG.md && git commit -m \"doc: change log\"",
-    "start": "electron-forge start",
+    "start": "set APP_DEV=true && electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-webpack && electron-builder build",
+    "make": "electron-forge make",
     "publishOnly": "electron-forge publish",
     "postpublish": "npm-run-all -s tag gen-changelog",
     "dev": "electron ."
@@ -46,6 +28,9 @@
   ],
   "author": "Lior Dahan",
   "license": "MIT",
+  "config": {
+    "forge": "./forge.config.js"
+  },
   "dependencies": {
     "@flaticon/flaticon-uicons": "^1.7.0",
     "@hot-loader/react-dom": "^17.0.1",

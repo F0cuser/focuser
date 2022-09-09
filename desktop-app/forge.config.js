@@ -1,9 +1,16 @@
 module.exports = {
+  packagerConfig: {
+    extraResource: [
+      "./proxy",
+      "./public"
+    ]
+  },
   makers: [
     {
       name: "@electron-forge/maker-squirrel",
       config: {
         name: "electron-ts-react",
+        setupExe: "f0cuser_installer.exe",
       },
     },
     {
@@ -25,6 +32,7 @@ module.exports = {
       {
         mainConfig: "./webpack.main.config.js",
         renderer: {
+          nodeIntegration: true,
           config: "./webpack.renderer.config.js",
           entryPoints: [
             {

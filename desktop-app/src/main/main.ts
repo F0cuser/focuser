@@ -12,10 +12,24 @@ import WindowsRegistryEditor from "../utils/windowsRegistryEditor";
 import { channels } from "../utils/shared/constants";
 import { Store } from "../utils/settingsInterface";
 import ProxyServerController from "../utils/proxy/proxyServerController";
+import { rootPath } from "electron-root-path";
 import path from "path";
+import url from 'url'
+import { exec } from "child_process";
 
 declare global {
   const MAIN_WINDOW_WEBPACK_ENTRY: string;
+  const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+}
+
+
+if  (process.argv[1] === 'squirrel-install') {
+  exec(`powershell "Import-Certificate -FilePath '${path.join(rootPath, './proxy/focuser.crt')}' -CertStoreLocation cert:\\CurrentUser\\root"`)
+  app.quit()
+}
+if (require("electron-squirrel-startup")) {
+  // eslint-disable-line global-require
+  app.quit();
 }
 
 if (process.platform === 'win32')
@@ -27,22 +41,19 @@ export const pacServer: PacServer = PacServer.getInstance();
 let isQuitting = false;
 let firstTimeMinimize = true;
 const ICON_PATH = path.join(
-  __dirname,
-  "../../public/static/images/trayIcon.ico",
+  rootPath,
+  process.env.APP_DEV ? "./public/static/images/trayIcon.ico" : "./resources/public/static/images/trayIcon.ico",
 );
 const winregEditor: WindowsRegistryEditor = WindowsRegistryEditor.getInstance();
 const settingsStore = new Store({ configName: "focuser", defaults: [] });
 const proxyServerController: ProxyServerController =
   ProxyServerController.getInstance(
-    path.join(__dirname, "../utils/proxy/proxyServer.exe"),
+    path.join(rootPath, process.env.APP_DEV ? "./proxy/proxyServer.exe" : "./resources/proxy/proxyServer.exe"),
     ProxyServerController.getPortFromConfiguration(settingsStore),
   );
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require("electron-squirrel-startup")) {
-  // eslint-disable-line global-require
-  app.quit();
-}
+
 
 app.whenReady().then(() => {
   createTrayIcon();
@@ -56,8 +67,7 @@ app.whenReady().then(() => {
   });
 });
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
+
 let mainWindow: null | BrowserWindow;
 
 const createWindow = () => {
@@ -72,8 +82,18 @@ const createWindow = () => {
     },
   });
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+
+  if (process.env.APP_DEV) {
+    mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
+  }
+  else {
+    mainWindow.loadURL(url.format({
+      pathname: path.join(rootPath, './resources/app/.webpack/renderer/main_window/index.html'),
+      protocol: 'file:',
+      slashes: true
+        }));
+  }
+
 
   mainWindow.on("minimize", (event: Event) => {
     minimizeToTray(event);
