@@ -9,8 +9,9 @@ module.exports = {
     {
       name: "@electron-forge/maker-squirrel",
       config: {
-        name: "electron-ts-react",
+        name: "Focuser",
         setupExe: "f0cuser_installer.exe",
+        
       },
     },
     {
