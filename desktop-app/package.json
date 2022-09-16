@@ -1,7 +1,7 @@
 {
   "name": "focuser",
   "productName": "Focuser",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "A free & opensource distraction-reducing app for maximizing your productivity - built in electronJS!",
   "repository": {
     "type": "git",
@@ -50,6 +50,7 @@
     "react-modal": "^3.15.1",
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
+    "react-switch": "^7.0.0",
     "react-timer-hook": "^3.0.5",
     "replace-in-file": "^6.3.5",
     "winreg": "^1.2.4",

@@ -193,11 +193,17 @@ app.on("activate", () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
+ipcMain.handle(channels.WRITE_SETTINGS, async (newSettings: {[key: string]: any}) => {
+  for (const k in newSettings) {
+    settingsStore.set(k, newSettings[k]);
+  }
+});
+
 ipcMain.handle(channels.READ_SETTINGS, async (_: any, args: any) => {
-  const resultsToReturn = [];
+  const resultsToReturn: {[key: string]: any} = {};
   for (const arg of args) {
     const result = settingsStore.get(arg);
-    resultsToReturn.push({ [arg]: result });
+    resultsToReturn[arg] = result;
   }
   return resultsToReturn;
 });

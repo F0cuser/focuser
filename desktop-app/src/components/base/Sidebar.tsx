@@ -11,6 +11,7 @@ import urlsPath from "../../../public/static/images/urls.svg";
 import appsPath from "../../../public/static/images/applications.svg";
 import settingsPath from "../../../public/static/images/settings.svg";
 import { useDispatch } from "react-redux";
+import { getSettingsFromFile } from "../../utils/reducers/settings";
 
 const { ipcRenderer } = window.require('electron');
 
@@ -20,10 +21,11 @@ const Sidebar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    ipcRenderer.invoke(channels.READ_SETTINGS, ['urls']).then(results => {
-      const urls = results[0].urls;
+    ipcRenderer.invoke(channels.READ_SETTINGS, ['urls', 'settings']).then(results => {
+      const urls = results.urls;
       if (urls)
         dispatch(setUrlsFromSettings(urls))
+      dispatch(getSettingsFromFile(results.settings))
     })
   }, [dispatch])
 
