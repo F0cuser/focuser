@@ -8,9 +8,9 @@ import styles from "./Sidebar.module.css";
 import timerPath from "../../../public/static/images/timer.svg";
 import logoPath from "../../../public/static/images/logo.svg";
 import urlsPath from "../../../public/static/images/urls.svg";
-import appsPath from "../../../public/static/images/applications.svg";
 import settingsPath from "../../../public/static/images/settings.svg";
 import { useDispatch } from "react-redux";
+import { getSettingsFromFile } from "../../utils/reducers/settings";
 
 const { ipcRenderer } = window.require('electron');
 
@@ -20,10 +20,11 @@ const Sidebar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    ipcRenderer.invoke(channels.READ_SETTINGS, ['urls']).then(results => {
-      const urls = results[0].urls;
-      if (urls)
-        dispatch(setUrlsFromSettings(urls))
+    ipcRenderer.invoke(channels.READ_SETTINGS, ['urls', 'runOnStartup']).then(results => {
+      if (results.urls)
+        dispatch(setUrlsFromSettings(results.urls))
+      results = Object.fromEntries(Object.entries(results).filter(([key]) => !key.includes('urls')));
+      dispatch(getSettingsFromFile(results))
     })
   }, [dispatch])
 
@@ -61,20 +62,6 @@ const Sidebar = () => {
                   alt="urls"
                 />
                 <p className={`${styles.navLinkText} d-inline`}>Websites</p>
-              </div>
-            </NavLink>
-          </li>
-          <li className="mb-4">
-            <NavLink to="/apps" className={styles.navLink}>
-              <div
-                className={`${styles.navLink} d-flex align-items-center justify-content-between p-3`}
-              >
-                <img
-                  className={`${styles.navLinkImage} d-inline`}
-                  src={appsPath}
-                  alt="urls"
-                />
-                <p className={`${styles.navLinkText} d-inline`}>Apps</p>
               </div>
             </NavLink>
           </li>

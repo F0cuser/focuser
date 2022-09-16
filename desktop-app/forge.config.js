@@ -9,9 +9,10 @@ module.exports = {
     {
       name: "@electron-forge/maker-squirrel",
       config: {
-        name: "Focuser",
         setupExe: "f0cuser_installer.exe",
-        
+        noMsi: false,
+        iconUrl: 'https://github.com/F0cuser/focuser/releases/download/v0.9/trayIcon.ico',
+        setupIcon: './public/static/images/trayIcon.ico'
       },
     },
     {

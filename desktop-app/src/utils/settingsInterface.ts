@@ -32,7 +32,8 @@ export class Store {
 }
 
 const settingsStore = new Store({configName: 'focuser', defaults: {
-    urls: []
+    urls: [],
+    runOnStartup: false,
 }})
 
 export default settingsStore;

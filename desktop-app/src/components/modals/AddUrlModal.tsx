@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal } from "../../utils/reducers/modal";
+import { closeModal, openModal } from "../../utils/reducers/modal";
 import { setUrls } from "../../utils/reducers/urls";
 import { RootState } from "../../utils/store";
 
@@ -9,28 +9,33 @@ import styles from "./AddUrlModal.module.css";
 
 const AddUrl = () => {
   const dispatch = useDispatch();
-  const urls = [...useSelector((state: RootState) => state.urls.urls)];
+  const urls = useSelector((state: RootState) => state.urls.urls);
   const isTimerActive = useSelector((state: RootState) => state.timer.isActive);
 
   useEffect(() => {
     setupKeypressListeners();
     document.getElementById("addUrlInput")?.focus();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const getKeypress = (ev: KeyboardEvent) => {
+    if (ev.key === "Enter") {
+      addUrlToList(false);
+      dispatch(closeModal());
+      dispatch(openModal('addUrl'))
+    }
+    if (ev.key === "Escape") {
+      dispatch(closeModal());
+    }
+  };
+
   const setupKeypressListeners = () => {
-    document.addEventListener('keyup', (ev) => {
-      switch (ev.key) {
-        case 'Enter':
-          addUrlToList(false);
-          break;
-        case 'Escape':
-          dispatch(closeModal())
-          break;
-        default:
-          break;
-      }
-    })
+    document
+      .getElementById("addUrlInput")
+      ?.removeEventListener("mousedown", getKeypress, true);
+    document
+      .getElementById("addUrlInput")
+      ?.addEventListener("keydown", getKeypress);
   };
   const addUrlToList = (shouldClose: boolean) => {
     const urlInputElem: HTMLInputElement = document.getElementById(
@@ -48,25 +53,27 @@ const AddUrl = () => {
     document.getElementById("addUrlInput")?.focus();
     if (shouldClose) {
       dispatch(closeModal());
+      return;
     }
+    console.log(urls);
   };
 
   return (
     <React.Fragment>
-        <h1 className={`${styles.modalHeader} mt-2`}>Add URL</h1>
-        <input
-          type="text"
-          className={`${styles.addUrlInput}`}
-          placeholder="e.g. annoying-website.com"
-          id="addUrlInput"
-          required
-        />
-        <div
-          className={`${styles.actionButtonsWrapper} d-flex justify-content-end gap-3`}
-        >
-          <button onClick={() => addUrlToList(false)}>Add Another</button>
-          <button onClick={() => addUrlToList(true)}>Finish</button>
-        </div>
+      <h1 className={`${styles.modalHeader} mt-2`}>Add URL</h1>
+      <input
+        type="text"
+        className={`${styles.addUrlInput}`}
+        placeholder="annoying-website.com"
+        id="addUrlInput"
+        required
+      />
+      <div
+        className={`${styles.actionButtonsWrapper} d-flex justify-content-end gap-3`}
+      >
+        <button onClick={() => addUrlToList(false)}>Add Another</button>
+        <button onClick={() => addUrlToList(true)}>Finish</button>
+      </div>
     </React.Fragment>
   );
 };

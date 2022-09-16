@@ -54,10 +54,13 @@ const proxyServerController: ProxyServerController =
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 
+app.setLoginItemSettings({
+  openAtLogin: settingsStore.get('runOnStartup'),
+})
 
 app.whenReady().then(() => {
   createTrayIcon();
-  session.defaultSession.webRequest.onHeadersReceived((details: { responseHeaders: any; }, callback: (arg0: { responseHeaders: any; }) => void) => {
+  session.defaultSession.webRequest.onHeadersReceived((details: Electron.OnHeadersReceivedListenerDetails, callback: (arg0: { responseHeaders: any; }) => void) => {
     callback({
       responseHeaders: {
         ...details.responseHeaders,
@@ -193,11 +196,20 @@ app.on("activate", () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
+ipcMain.handle(channels.WRITE_SETTINGS, async (_: any, newSettings: {[key: string]: any}) => {
+  for (const k in newSettings) {
+    settingsStore.set(k, newSettings[k]);
+  }
+  app.setLoginItemSettings({
+    openAtLogin: settingsStore.get('runOnStartup'),
+  })
+});
+
 ipcMain.handle(channels.READ_SETTINGS, async (_: any, args: any) => {
-  const resultsToReturn = [];
+  const resultsToReturn: {[key: string]: any} = {};
   for (const arg of args) {
     const result = settingsStore.get(arg);
-    resultsToReturn.push({ [arg]: result });
+    resultsToReturn[arg] = result;
   }
   return resultsToReturn;
 });
