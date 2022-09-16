@@ -9,8 +9,8 @@ export const settingsReducer = createSlice({
   },
   reducers: {
     updateSettings: (state, action) => {
-      state.settings = { ...state.settings, ...action.payload };
-      ipcRenderer.invoke(channels.WRITE_SETTINGS, { ...state.settings });
+      state.settings = { ...state.settings, ...action.payload.newSettings };
+      ipcRenderer.invoke(channels.WRITE_SETTINGS, action.payload.newSettings);
     },
     getSettingsFromFile: (state, action) => {
 			for (const key in action.payload) {

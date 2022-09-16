@@ -10,8 +10,9 @@ import styles from "./Settings.module.css";
 const Settings = () => {
   const settings = useSelector((state: RootState) => state.settings.settings);
   const dispatch = useDispatch();
-  const handleSwitchChange = (checked: boolean, event: MouseEvent, id: string) => {
-    dispatch(updateSettings({[id]: checked}));
+  
+  const handleSwitchChange = (checked: boolean, _: MouseEvent, id: string) => {
+    dispatch(updateSettings({newSettings: {[id]: checked}}));
   }
 
   return (

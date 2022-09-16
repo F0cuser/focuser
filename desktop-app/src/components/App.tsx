@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 
 import store from "../utils/store";
 import Timer from "./routes/Timer";
-import AppSelect from "./routes/AppSelect";
 import UrlSelect from "./routes/UrlSelect";
 import Settings from "./routes/Settings";
 import Sidebar from "./base/Sidebar";
@@ -66,7 +65,6 @@ function App() {
                 }
               />
               <Route path="/urls" element={<UrlSelect />} />
-              <Route path="/apps" element={<AppSelect />} />
               <Route path="/settings" element={<Settings />} />
             </Route>
           </Routes>
