@@ -200,6 +200,9 @@ ipcMain.handle(channels.WRITE_SETTINGS, async (_: any, newSettings: {[key: strin
   for (const k in newSettings) {
     settingsStore.set(k, newSettings[k]);
   }
+  app.setLoginItemSettings({
+    openAtLogin: settingsStore.get('runOnStartup'),
+  })
 });
 
 ipcMain.handle(channels.READ_SETTINGS, async (_: any, args: any) => {
