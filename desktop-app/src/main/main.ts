@@ -56,6 +56,8 @@ const proxyServerController: ProxyServerController =
 
 app.setLoginItemSettings({
   openAtLogin: settingsStore.get('runOnStartup'),
+  path: path.join(rootPath, '../Focuser.exe'),
+  openAsHidden: true,
 })
 
 app.whenReady().then(() => {
@@ -202,6 +204,8 @@ ipcMain.handle(channels.WRITE_SETTINGS, async (_: any, newSettings: {[key: strin
   }
   app.setLoginItemSettings({
     openAtLogin: settingsStore.get('runOnStartup'),
+    path: path.join(rootPath, '../Focuser.exe'),
+    openAsHidden: true,
   })
 });
 
