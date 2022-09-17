@@ -1,7 +1,7 @@
 {
   "name": "focuser",
   "productName": "Focuser",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A free & opensource distraction-reducing app for maximizing your productivity - built in electronJS!",
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "start": "set APP_DEV=true && electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publishOnly": "electron-forge publish",
+    "publish": "set $(cat secrets.env) && electron-forge publish",
     "postpublish": "npm-run-all -s tag gen-changelog",
     "dev": "electron ."
   },
@@ -71,6 +71,7 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.59",
     "@electron-forge/maker-zip": "^6.0.0-beta.59",
     "@electron-forge/plugin-webpack": "^6.0.0-beta.59",
+    "@electron-forge/publisher-github": "^6.0.0-beta.66",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "@types/electron-json-storage": "^4.5.0",
     "@types/node": "^16.11.41",

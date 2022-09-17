@@ -4,3 +4,4 @@ out
 lib
 *.log
 dist/
+secrets.env

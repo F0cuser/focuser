@@ -28,6 +28,18 @@ module.exports = {
       config: {},
     },
   ],
+  publishers: [
+    {
+      name: "@electron-forge/publisher-github",
+      config: {
+        repository: {
+          owner: "F0cuser",
+          name: "focuser"
+        },
+        draft: true
+      }
+    }
+  ],
   plugins: [
     [
       "@electron-forge/plugin-webpack",
