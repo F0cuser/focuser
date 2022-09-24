@@ -2,3 +2,4 @@ node_modules/
 *.log
 focuser_webserver.log
 .vscode/
+blocker-proxy/src/__pycache__/
