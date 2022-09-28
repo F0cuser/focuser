@@ -16,16 +16,9 @@ const BackgroundTimer = forwardRef((_, ref) => {
   }) as { [key: string]: any };
 
   useImperativeHandle(ref, () => ({
-    updateTime(digitType: string, timeToAdd: number) {
-      const prevValue = timerHook[digitType];
-      if (
-        (prevValue === 0 && timeToAdd < 0) ||
-        (digitType !== "hours" && prevValue === 59 && timeToAdd > 0)
-      ) {
-        timerHook[digitType] = 0;
-      } else {
-        timerHook[digitType] += timeToAdd;
-      }
+    updateTime(digitType: 'hours' | 'minutes' | 'seconds', timeToAdd: number) {
+      const timePeriodsInSeconds = {hours: 3600, minutes: 60, seconds: 1}
+      timerHook.seconds += timeToAdd * timePeriodsInSeconds[digitType] 
       const newTime = convertSelectionToDateObj({
         hours: timerHook.hours,
         minutes: timerHook.minutes,
