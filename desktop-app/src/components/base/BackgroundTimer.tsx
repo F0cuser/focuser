@@ -18,11 +18,10 @@ const BackgroundTimer = forwardRef((_, ref) => {
   useImperativeHandle(ref, () => ({
     updateTime(digitType: 'hours' | 'minutes' | 'seconds', timeToAdd: number) {
       const timePeriodsInSeconds = {hours: 3600, minutes: 60, seconds: 1}
-      const prevValue = timerHook[digitType];
-      console.log(digitType, prevValue)
-      if (prevValue === 0 && timeToAdd < 0 && digitType !== 'hours') {
-        timeToAdd = 59
-      }
+      // const prevValue = timerHook[digitType];
+      // if (prevValue === 0 && timeToAdd < 0 && digitType !== 'hours') {
+      //   timeToAdd = 59
+      // }
       timerHook.seconds += timeToAdd * timePeriodsInSeconds[digitType] 
       const newTime = convertSelectionToDateObj({
         hours: timerHook.hours,
