@@ -24,7 +24,8 @@ declare global {
 
 
 if  (process.argv[1] === 'squirrel-install') {
-  exec(`powershell "Import-Certificate -FilePath '${path.join(rootPath, './proxy/focuser.crt')}' -CertStoreLocation cert:\\CurrentUser\\root"`)
+  console.log("INSTALLING CERT")
+  exec(`powershell "Import-Certificate -FilePath '${path.join(rootPath, './proxy/focuser.crt')}' -CertStoreLocation cert:\\LocalMachine\\root"`)
   app.quit()
 }
 if (require("electron-squirrel-startup")) {
