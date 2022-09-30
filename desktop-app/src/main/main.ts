@@ -14,28 +14,87 @@ import { Store } from "../utils/settingsInterface";
 import ProxyServerController from "../utils/proxy/proxyServerController";
 import { rootPath } from "electron-root-path";
 import path from "path";
-import url from 'url'
+import url from "url";
 import { exec } from "child_process";
-
+import log from "electron-log";
+import windows from "node-windows";
 declare global {
   const MAIN_WINDOW_WEBPACK_ENTRY: string;
   const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 }
 
 
-if  (process.argv[1] === 'squirrel-install') {
-  console.log("INSTALLING CERT")
-  exec(`powershell "Import-Certificate -FilePath '${path.join(rootPath, './proxy/focuser.crt')}' -CertStoreLocation cert:\\LocalMachine\\root"`)
-  app.quit()
-}
-if (require("electron-squirrel-startup")) {
-  // eslint-disable-line global-require
-  app.quit();
+if (handleSquirrelEvent()) {
+  // squirrel event handled and app will exit in 1000ms, so don't do anything else
 }
 
-if (process.platform === 'win32')
-{
-    app.setAppUserModelId(app.name)
+function handleSquirrelEvent() {
+  if (process.argv.length === 1) {
+    return false;
+  }
+
+  const ChildProcess = require("child_process");
+  const path = require("path");
+
+  const appFolder = path.resolve(process.execPath, "..");
+  const rootAtomFolder = path.resolve(appFolder, "..");
+  const updateDotExe = path.resolve(path.join(rootAtomFolder, "Update.exe"));
+  const exeName = path.basename(process.execPath);
+
+  const spawn = function (command, args) {
+    let spawnedProcess, error;
+
+    try {
+      spawnedProcess = ChildProcess.spawn(command, args, { detached: true });
+    } catch (error) {}
+
+    return spawnedProcess;
+  };
+
+  const spawnUpdate = function (args) {
+    return spawn(updateDotExe, args);
+  };
+
+  const squirrelEvent = process.argv[1];
+  switch (squirrelEvent) {
+    case "--squirrel-install":
+    case "--squirrel-updated":
+      const elevateCommand = `"${path.join(appFolder, './resources/proxy/elevate/elevate.cmd')}"`
+      exec(
+        `${elevateCommand} powershell "Import-Certificate -FilePath '${path.join(
+          appFolder,
+          "./resources/proxy/focuser.crt",
+        )}' -CertStoreLocation cert:\\LocalMachine\\root"`,
+      );
+      spawnUpdate(["--createShortcut", exeName]);
+
+      setTimeout(app.quit, 1000);
+      return true;
+
+      
+
+    case "--squirrel-uninstall":
+      // Undo anything you did in the --squirrel-install and
+      // --squirrel-updated handlers
+
+      // Remove desktop and start menu shortcuts
+      spawnUpdate(["--removeShortcut", exeName]);
+
+      setTimeout(app.quit, 1000);
+      return true;
+
+    case "--squirrel-obsolete":
+      // This is called on the outgoing version of your app before
+      // we update to the new version - it's the opposite of
+      // --squirrel-updated
+
+      app.quit();
+      return true;
+  }
+}
+
+if (process.platform === "win32") {
+  app.setAppUserModelId(app.name);
 }
 
 export const pacServer: PacServer = PacServer.getInstance();
@@ -43,36 +102,47 @@ let isQuitting = false;
 let firstTimeMinimize = true;
 const ICON_PATH = path.join(
   rootPath,
-  process.env.APP_DEV ? "./public/static/images/trayIcon.ico" : "./resources/public/static/images/trayIcon.ico",
+  process.env.APP_DEV
+    ? "./public/static/images/trayIcon.ico"
+    : "./resources/public/static/images/trayIcon.ico",
 );
 const winregEditor: WindowsRegistryEditor = WindowsRegistryEditor.getInstance();
 const settingsStore = new Store({ configName: "focuser", defaults: [] });
 const proxyServerController: ProxyServerController =
   ProxyServerController.getInstance(
-    path.join(rootPath, process.env.APP_DEV ? "./proxy/proxyServer.exe" : "./resources/proxy/proxyServer.exe"),
+    path.join(
+      rootPath,
+      process.env.APP_DEV
+        ? "./proxy/proxyServer.exe"
+        : "./resources/proxy/proxyServer.exe",
+    ),
     ProxyServerController.getPortFromConfiguration(settingsStore),
   );
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 
 app.setLoginItemSettings({
-  openAtLogin: settingsStore.get('runOnStartup'),
-  path: path.join(rootPath, '../Focuser.exe'),
+  openAtLogin: settingsStore.get("runOnStartup"),
+  path: path.join(rootPath, "../Focuser.exe"),
   openAsHidden: true,
-})
+});
 
 app.whenReady().then(() => {
   createTrayIcon();
-  session.defaultSession.webRequest.onHeadersReceived((details: Electron.OnHeadersReceivedListenerDetails, callback: (arg0: { responseHeaders: any; }) => void) => {
-    callback({
-      responseHeaders: {
-        ...details.responseHeaders,
-        "Content-Security-Policy": ["*"],
-      },
-    });
-  });
+  session.defaultSession.webRequest.onHeadersReceived(
+    (
+      details: Electron.OnHeadersReceivedListenerDetails,
+      callback: (arg0: { responseHeaders: any }) => void,
+    ) => {
+      callback({
+        responseHeaders: {
+          ...details.responseHeaders,
+          "Content-Security-Policy": ["*"],
+        },
+      });
+    },
+  );
 });
-
 
 let mainWindow: null | BrowserWindow;
 
@@ -88,18 +158,20 @@ const createWindow = () => {
     },
   });
 
-
   if (process.env.APP_DEV) {
-    mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
+    mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  } else {
+    mainWindow.loadURL(
+      url.format({
+        pathname: path.join(
+          rootPath,
+          "./resources/app/.webpack/renderer/main_window/index.html",
+        ),
+        protocol: "file:",
+        slashes: true,
+      }),
+    );
   }
-  else {
-    mainWindow.loadURL(url.format({
-      pathname: path.join(rootPath, './resources/app/.webpack/renderer/main_window/index.html'),
-      protocol: 'file:',
-      slashes: true
-        }));
-  }
-
 
   mainWindow.on("minimize", (event: Event) => {
     minimizeToTray(event);
@@ -131,8 +203,8 @@ const minimizeToTray = (event: Event) => {
       body: "You can still open the app from the system tray!",
       silent: true,
       icon: ICON_PATH,
-    })
-    notification.on('click', () => mainWindow?.show())
+    });
+    notification.on("click", () => mainWindow?.show());
     notification.show();
   }
 
@@ -199,19 +271,22 @@ app.on("activate", () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-ipcMain.handle(channels.WRITE_SETTINGS, async (_: any, newSettings: {[key: string]: any}) => {
-  for (const k in newSettings) {
-    settingsStore.set(k, newSettings[k]);
-  }
-  app.setLoginItemSettings({
-    openAtLogin: settingsStore.get('runOnStartup'),
-    path: path.join(rootPath, '../Focuser.exe'),
-    openAsHidden: true,
-  })
-});
+ipcMain.handle(
+  channels.WRITE_SETTINGS,
+  async (_: any, newSettings: { [key: string]: any }) => {
+    for (const k in newSettings) {
+      settingsStore.set(k, newSettings[k]);
+    }
+    app.setLoginItemSettings({
+      openAtLogin: settingsStore.get("runOnStartup"),
+      path: path.join(rootPath, "../Focuser.exe"),
+      openAsHidden: true,
+    });
+  },
+);
 
 ipcMain.handle(channels.READ_SETTINGS, async (_: any, args: any) => {
-  const resultsToReturn: {[key: string]: any} = {};
+  const resultsToReturn: { [key: string]: any } = {};
   for (const arg of args) {
     const result = settingsStore.get(arg);
     resultsToReturn[arg] = result;
@@ -219,16 +294,26 @@ ipcMain.handle(channels.READ_SETTINGS, async (_: any, args: any) => {
   return resultsToReturn;
 });
 
-ipcMain.handle(channels.WRITE_URLS, async (_: any, args: { key: string | number; value: string[] | undefined; timerActive: any; }) => {
-  settingsStore.set(args.key, args.value);
-  PacServer.buildPacFile(proxyServerController.port, args.value);
-  if (args.timerActive) {
-    restartPacServer().then(() => {
-      winregEditor.disablePacServer();
-      winregEditor.setPacServer(pacServer.port);
-    });
-  }
-});
+ipcMain.handle(
+  channels.WRITE_URLS,
+  async (
+    _: any,
+    args: {
+      key: string | number;
+      value: string[] | undefined;
+      timerActive: any;
+    },
+  ) => {
+    settingsStore.set(args.key, args.value);
+    PacServer.buildPacFile(proxyServerController.port, args.value);
+    if (args.timerActive) {
+      restartPacServer().then(() => {
+        winregEditor.disablePacServer();
+        winregEditor.setPacServer(pacServer.port);
+      });
+    }
+  },
+);
 
 ipcMain.handle(channels.START_PAC, async (_: any, __: any) => {
   winregEditor.setPacServer(pacServer.port);
@@ -239,7 +324,11 @@ ipcMain.handle(channels.STOP_PAC, async (_: any, __: any) => {
 });
 
 ipcMain.handle(channels.FINISH_TIMER, () => {
-  const notification = new Notification({title: 'Time\'s Up!', body: 'If you want to restart the timer, now\'s the time to do it!', icon: ICON_PATH});
-  notification.on('click', () => mainWindow?.show());
+  const notification = new Notification({
+    title: "Time's Up!",
+    body: "If you want to restart the timer, now's the time to do it!",
+    icon: ICON_PATH,
+  });
+  notification.on("click", () => mainWindow?.show());
   notification.show();
-})
+});
