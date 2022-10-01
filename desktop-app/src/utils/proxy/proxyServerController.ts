@@ -66,6 +66,8 @@ class ProxyServerController {
           this.killServerProcess()
           this.startServer(configStore)
         Logger.info(stdout)
+        console.log(stdout)
+        console.log(stderr)
       },
     );
     Logger.info('[+] Started proxy server');

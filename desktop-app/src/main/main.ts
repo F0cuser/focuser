@@ -16,8 +16,7 @@ import { rootPath } from "electron-root-path";
 import path from "path";
 import url from "url";
 import { exec } from "child_process";
-import log from "electron-log";
-import windows from "node-windows";
+
 declare global {
   const MAIN_WINDOW_WEBPACK_ENTRY: string;
   const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -34,15 +33,13 @@ function handleSquirrelEvent() {
   }
 
   const ChildProcess = require("child_process");
-  const path = require("path");
-
   const appFolder = path.resolve(process.execPath, "..");
   const rootAtomFolder = path.resolve(appFolder, "..");
   const updateDotExe = path.resolve(path.join(rootAtomFolder, "Update.exe"));
   const exeName = path.basename(process.execPath);
 
-  const spawn = function (command, args) {
-    let spawnedProcess, error;
+  const spawn = function (command: any, args: any) {
+    let spawnedProcess;
 
     try {
       spawnedProcess = ChildProcess.spawn(command, args, { detached: true });
@@ -51,7 +48,7 @@ function handleSquirrelEvent() {
     return spawnedProcess;
   };
 
-  const spawnUpdate = function (args) {
+  const spawnUpdate = function (args: any[]) {
     return spawn(updateDotExe, args);
   };
 

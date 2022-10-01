@@ -6,7 +6,7 @@ import sys
 
 if len(sys.argv) < 2:
     print("USAGE: python webserver.py <LISTENER PORT>")
-    exit(1)
+    sys.exit(1)
 LISTENER_PORT = int(sys.argv[1])
 BUFFER_SIZE = 4096
 
