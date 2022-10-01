@@ -1,4 +1,4 @@
-import { ChildProcess, execFile, spawn } from "child_process";
+import { execFile } from "child_process";
 import Store from "../settingsInterface";
 import portFinder from 'portfinder'
 import processFinder from 'find-process'
