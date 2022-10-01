@@ -20,6 +20,13 @@ const TimerElement = (props: {
     }, 150);
   };
 
+  const onTimerAdjustScroll = (e: React.WheelEvent) => {
+    if (e.target instanceof Element) {
+      const digitType = e.target.id.replace('Digits', '');
+      props.updateTime(digitType, -e.deltaY / 100);
+    }
+  }
+
   const stopTimerAdjust = () => {
     window.clearInterval(intervalRef.current);
     intervalRef.current = 0;
@@ -40,7 +47,7 @@ const TimerElement = (props: {
         >
           <img className={`${styles.buttonImage}`} src={upArrowPath} alt="up" />
         </button>
-        <h1 className={`${styles.digits} mt-2`} id="hoursDigits">
+        <h1 className={`${styles.digits} mt-2`} id="hoursDigits" onWheel={onTimerAdjustScroll}>
           {timerState.hours.toString().padStart(2, "0")}
         </h1>
         <button
@@ -68,7 +75,7 @@ const TimerElement = (props: {
         >
           <img className={`${styles.buttonImage}`} src={upArrowPath} alt="up" />
         </button>
-        <h1 className={`${styles.digits} mt-2`} id="minutesDigits">
+        <h1 className={`${styles.digits} mt-2`} id="minutesDigits" onWheel={onTimerAdjustScroll}>
           {timerState.minutes.toString().padStart(2, "0")}
         </h1>
         <button
@@ -96,7 +103,7 @@ const TimerElement = (props: {
         >
           <img className={`${styles.buttonImage}`} src={upArrowPath} alt="up" />
         </button>
-        <h1 className={`${styles.digits} mt-2`} id="secondsDigits">
+        <h1 className={`${styles.digits} mt-2`} id="secondsDigits" onWheel={onTimerAdjustScroll}>
           {timerState.seconds.toString().padStart(2, "0")}
         </h1>
         <button
