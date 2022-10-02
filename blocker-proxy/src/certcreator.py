@@ -3,6 +3,8 @@ from OpenSSL.SSL import FILETYPE_PEM
 from OpenSSL.crypto import (dump_certificate, X509, PKey, TYPE_RSA,
                             dump_privatekey, load_certificate, load_privatekey, X509Extension)
 import tempfile
+from utils import get_filepath
+
 
 
 def delete_temporary_pair_files(certfile: tempfile._TemporaryFileWrapper, keyfile: tempfile._TemporaryFileWrapper):
@@ -29,7 +31,7 @@ def write_temporary_pair_to_file(cert: X509, key: PKey) -> Tuple[tempfile._Tempo
         tuple(tempfile._TemporaryFileWrapper): Files that can be safely deleted later.
 
     """
-    certfile, keyfile = open('temp.crt', 'wb'), open('temp.key', 'wb')
+    certfile, keyfile = open(get_filepath('temp.crt'), 'wb'), open(get_filepath('temp.key'), 'wb')
     certfile.write(dump_certificate(FILETYPE_PEM, cert))
     keyfile.write(dump_privatekey(FILETYPE_PEM, key))
     return certfile.name, keyfile.name
@@ -69,8 +71,7 @@ def get_certpair_for_host(hostname: str) -> Tuple[tempfile._TemporaryFileWrapper
     Returns:
         tuple(tempfile._TemporaryFileWrapper): Files that can be safely deleted later.
     """
-
-    ca_cert, ca_key = load_ca_pair('./focuser.crt', './focuser.key')
+    ca_cert, ca_key = load_ca_pair(get_filepath('focuser.crt'), get_filepath('focuser.key'))
 
     key = PKey()
     cert = X509()

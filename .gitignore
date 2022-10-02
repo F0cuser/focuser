@@ -2,4 +2,9 @@ node_modules/
 *.log
 focuser_webserver.log
 .vscode/
+desktop-app/proxy/temp.crt
+desktop-app/proxy/temp.key
+blocker-proxy/src/build/
+blocker-proxy/src/dist/
 blocker-proxy/src/__pycache__/
+blocker-proxy/src/webserver.spec
