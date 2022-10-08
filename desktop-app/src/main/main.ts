@@ -22,6 +22,22 @@ declare global {
   const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 }
 
+let mainWindow: null | BrowserWindow;
+const instanceLock = app.requestSingleInstanceLock()
+const handleSecondInstance = () => {
+  if (!instanceLock) {
+    app.quit()
+  } else {
+    app.on('second-instance', () => {
+      if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore()
+        mainWindow.focus()
+      }
+    })
+  }
+}
+handleSecondInstance();
+
 if (handleSquirrelEvent()) {
 }
 
@@ -85,6 +101,8 @@ if (process.platform === "win32") {
   app.setAppUserModelId(app.name);
 }
 
+
+
 export const pacServer: PacServer = PacServer.getInstance();
 let isQuitting = false;
 let firstTimeMinimize = true;
@@ -130,7 +148,8 @@ app.whenReady().then(() => {
   );
 });
 
-let mainWindow: null | BrowserWindow;
+
+
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
