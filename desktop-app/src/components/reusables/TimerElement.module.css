@@ -26,11 +26,9 @@
 
 
 .buttonImage {
+    filter: invert(42%) sepia(16%) saturate(5247%) hue-rotate(169deg) brightness(97%) contrast(105%);
     aspect-ratio: 1;
     width: 48px;
-}
-
-.timerAdjust {
     transition: all 200ms linear;
 }
 
