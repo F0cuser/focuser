@@ -33,7 +33,7 @@ In order to function correctly (not display an insecure SSL warning on each requ
 
 ## Sounds Great, How Do I Use it?
 
-You can download the latest version from the **Releases** tab, and after a quick installation (The app will be installed to your AppData folder) you will be able to start the app and pick the websites you wish to block *- Yes, it is that easy*.
+You can download the latest version from the **Releases** tab, and after a quick installation (The app will be installed on the AppData/Local folder) you will be able to start the app and pick the websites you wish to block *- Yes, it is that easy*.
 
 ## Can I Help?
 
