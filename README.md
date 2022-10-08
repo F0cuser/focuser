@@ -1,10 +1,5 @@
-# F0cuser
-
-_A free & opensource distraction-reducing app for maximizing your productivity - built in electronJS!_
-
-
 ![Logo](./docs/images/logo.svg)
-
+_A free & opensource distraction-reducing app for maximizing your productivity - built in electronJS!_
 
 ## Where am I?
 
