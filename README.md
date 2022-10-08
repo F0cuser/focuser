@@ -3,9 +3,15 @@
 _A free & opensource distraction-reducing app for maximizing your productivity - built in electronJS!_
 
 
+![Logo](./docs/images/logo.svg)
+
+
 ## Where am I?
 
 Welcome! This GitHub repo hosts the F0cuser desktop application, which allows you to block web access to any website you want (and by blocking, we don't only mean access through your browser, but **all access**).
+
+
+![Timer-Page](./docs/images/timer-page.png)
 
 
 ## Why is This a Thing?
