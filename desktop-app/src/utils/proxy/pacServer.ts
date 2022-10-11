@@ -38,6 +38,7 @@ class PacServer {
   }
 
   public closeServer(): Promise<void> {
+    Logger.info('[+] Closing PAC server')
     this.isRunning = false;
     return new Promise<void>((resolve, _) => {
       this.server.close(() => resolve());

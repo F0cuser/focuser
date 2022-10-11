@@ -189,6 +189,7 @@ const createWindow = () => {
   });
 
   mainWindow.on("closed", () => {
+    pacServer.closeServer();
     winregEditor.disablePacServer();
     proxyServerController.stopServer();
 
