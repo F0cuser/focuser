@@ -38,7 +38,7 @@ const Timer = (props: {
         <div className={`row mt-5 px-3`}>
           <SettingsOption
             settingName="deepFocus"
-            settingLabel="Deep Focus Mode"
+            settingLabel="Deep Focus"
             isDisabled={timerState.isActive && settings.deepFocus}
           />
         </div>

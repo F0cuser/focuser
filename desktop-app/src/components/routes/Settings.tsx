@@ -9,7 +9,7 @@ const Settings = () => {
   const timerState = useSelector((state: RootState) => state.timer.isActive);
   return (
     <div className={`${styles.settingsWrapper}`}>
-      <SettingsOption settingName="deepFocus" settingLabel="Deep Focus Mode" isDisabled={isDeepMode && timerState} />
+      <SettingsOption settingName="deepFocus" settingLabel="Deep Focus" isDisabled={isDeepMode && timerState} />
       <SettingsOption settingName="runOnStartup" settingLabel="Run On Startup" isDisabled={false} />
       <h1 className={`${styles.settingsHeader} pageHeader text-center`}>Settings</h1>
 
