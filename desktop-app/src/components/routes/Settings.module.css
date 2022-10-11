@@ -4,20 +4,6 @@
 
 }
 
-.switchWrapper {
-    font-family: "George Regular";
-    color: #f1f1f1;
-    font-size: clamp(16px, 2.2vw, 32px);
-    cursor: pointer;
-    border-radius: 6px;
-    transition: all 100ms linear;
-}
-
-.switchWrapper:hover {
-    backdrop-filter: brightness(150%);
-}
-
-
 .settingsHeader {
     margin-top: clamp(150px, 27vh, 300px);
     font-family: "Header";
