@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateSettings } from "../../utils/reducers/settings";
 import { RootState } from "../../utils/store";
 
-const SettingsOption = (props: { settingName: string, settingLabel: string }) => {
+const SettingsOption = (props: { settingName: string, settingLabel: string, isDisabled: boolean }) => {
   const settings = useSelector((state: RootState) => state.settings.settings);
   const dispatch = useDispatch();
   const handleSwitchChange = (checked: boolean, _: MouseEvent, id: string) => {
@@ -19,6 +19,7 @@ const SettingsOption = (props: { settingName: string, settingLabel: string }) =>
       >
         <span className={`${styles.switchLabel}`}>{props.settingLabel}</span>
         <Switch
+          disabled={props.isDisabled}
           id={props.settingName}
           checked={settings[props.settingName]}
           onChange={handleSwitchChange}

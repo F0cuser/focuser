@@ -19,7 +19,7 @@ const DeepFocusWarningModal = (props: { toggleTimer: () => void }) => {
         <span style={{ fontWeight: "bolder", color: "var(--tertiary-color)" }}>
           not be able to pause blocking
         </span>{" "}
-        until the timer runs out (or until your computer restarts)
+        until the timer runs out (or until your device restarts)
         <br />
         <br />
         Are you sure you wish to continue?

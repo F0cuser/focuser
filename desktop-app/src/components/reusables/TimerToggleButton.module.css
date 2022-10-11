@@ -12,12 +12,21 @@
     
 }
 
+.timerToggleButton:disabled, .timerToggleButton:disabled:hover {
+    transition: none;
+    transform: none;
+    background-color: var(--primary-color);
+    cursor: wait;
+}
+
 .timerToggleButtonImage { 
     aspect-ratio: 1;
     width: 128px;
     filter: invert(92%) sepia(23%) saturate(1291%) hue-rotate(336deg) brightness(103%) contrast(97%);
+}
 
-
+.timerToggleButton:disabled .timerToggleButtonImage {
+    filter: invert(39%) sepia(12%) saturate(0%) hue-rotate(157deg) brightness(97%) contrast(87%);
 }
 
 .timerToggleButton:hover {

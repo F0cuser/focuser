@@ -32,13 +32,14 @@ const Timer = (props: {
           <TimerElement updateTime={props.updateTime} />
           <TimerToggleButton
             toggleFunction={checkIfDeepMode}
-            disabled={!new Date()}
+            disabled={timerState.isActive && settings.deepFocus}
           />
         </div>
         <div className={`row mt-5 px-3`}>
           <SettingsOption
             settingName="deepFocus"
             settingLabel="Deep Focus Mode"
+            isDisabled={timerState.isActive && settings.deepFocus}
           />
         </div>
       </div>
