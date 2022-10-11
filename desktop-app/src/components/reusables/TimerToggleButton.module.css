@@ -1,7 +1,5 @@
 .timerToggleButton, .timerToggleButton:hover {
     background: var(--primary-color);
-    filter: brightness(150%);
-    margin-right: 20%;
     height: 254px;
     width: 254px;
     
@@ -14,13 +12,23 @@
     
 }
 
+.timerToggleButton:disabled, .timerToggleButton:disabled:hover {
+    transition: none;
+    transform: none;
+    background-color: var(--primary-color);
+    cursor: wait;
+}
+
 .timerToggleButtonImage { 
     aspect-ratio: 1;
     width: 128px;
-    filter: brightness(0) saturate(100%) invert(89%) sepia(80%) saturate(1150%) hue-rotate(318deg) brightness(80%) contrast(97%);
+    filter: invert(92%) sepia(23%) saturate(1291%) hue-rotate(336deg) brightness(103%) contrast(97%);
+}
 
+.timerToggleButton:disabled .timerToggleButtonImage {
+    filter: invert(39%) sepia(12%) saturate(0%) hue-rotate(157deg) brightness(97%) contrast(87%);
 }
 
 .timerToggleButton:hover {
-    filter: brightness(200%);
+    background-color: #2f0b32;
 }

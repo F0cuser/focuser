@@ -21,7 +21,7 @@ const TimerElement = (props: {
   };
 
   const onTimerAdjustScroll = (e: React.WheelEvent) => {
-    if (e.target instanceof Element) {
+    if (e.target instanceof Element && !isTimerActive) {
       const digitType = e.target.id.replace('Digits', '');
       props.updateTime(digitType, -e.deltaY / 100);
     }

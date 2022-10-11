@@ -21,6 +21,10 @@ export class Store {
     this.data = parseDataFile(this.path, opts.defaults);
   }
 
+  getAll() {
+    return this.data;
+  }
+
   get(key: string | number) {
     return this.data[key];
   }

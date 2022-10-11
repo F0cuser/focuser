@@ -18,7 +18,7 @@ export const timerReducer = createSlice({
                 if (action.payload.isFinished) {
                     ipcRenderer.invoke(channels.FINISH_TIMER);
                 }
-            } 
+            }
 
         },
 

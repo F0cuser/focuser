@@ -11,6 +11,7 @@
     filter: brightness(150%);
 }
 
+
 .deleteItemImage:hover, .addUrl:hover .addUrlImage {
     transition: 0.2s;
 }
@@ -24,6 +25,24 @@
 
 .addUrl {
     cursor: pointer;
+}
+
+.addUrl:hover {
+    background-color: #400f44;
+    filter: brightness(150%);
+}
+
+.addUrl:disabled, .addUrl:disabled:hover {
+    background-color: #666666;
+    filter: none;
+    transition: none;
+    transform: none;
+    cursor: wait;
+}
+
+.deleteItemButton:disabled img {
+    cursor: wait;
+    filter: invert(42%) sepia(18%) saturate(0%) hue-rotate(237deg) brightness(87%) contrast(83%);
 }
 
 .addUrl img {
@@ -40,4 +59,23 @@
 .urlImage {
     width: clamp(19.5px, 1.51vw, 29px);
     height: clamp(27.5px, 4.16vh, 45px);
+}
+
+.noStyle {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+    margin: 0;
+    height: unset;
+    width: unset;
+}
+
+.noStyle:hover {
+    background-color: #400f44;
+    transition: none;
+    transform: none;
 }

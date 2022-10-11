@@ -1,26 +1,16 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import Switch from "react-switch";
-import { updateSettings } from "../../utils/reducers/settings";
+import { useSelector } from "react-redux";
 import { RootState } from "../../utils/store";
-
-
+import SettingsOption from "../reusables/SettingsOption";
 import styles from "./Settings.module.css";
 
 const Settings = () => {
-  const settings = useSelector((state: RootState) => state.settings.settings);
-  const dispatch = useDispatch();
-  
-  const handleSwitchChange = (checked: boolean, _: MouseEvent, id: string) => {
-    dispatch(updateSettings({newSettings: {[id]: checked}}));
-  }
-
+  const isDeepMode = useSelector((state: RootState) => state.settings.settings.deepFocus);
+  const timerState = useSelector((state: RootState) => state.timer.isActive);
   return (
     <div className={`${styles.settingsWrapper}`}>
-        <label className={`${styles.switchWrapper} d-flex align-items-center justify-content-between p-4`}>
-          <span className={`${styles.switchLabel}`}>Run on Startup</span>
-          <Switch id="runOnStartup" checked={settings.runOnStartup} onChange={handleSwitchChange} onColor="#0093d9" offColor="#1f0821"/>
-        </label>
+      <SettingsOption settingName="deepFocus" settingLabel="Deep Focus" isDisabled={isDeepMode && timerState} />
+      <SettingsOption settingName="runOnStartup" settingLabel="Run On Startup" isDisabled={false} />
       <h1 className={`${styles.settingsHeader} pageHeader text-center`}>Settings</h1>
 
     </div>

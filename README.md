@@ -21,7 +21,7 @@ You probably know about several browser extensions and even an application or tw
 As of now, F0cuser might not be quite on the same level as the more established applications already on the market, but it is slowly getting there with more features and fixes added every week.
 
 
-## Is it safe?
+## Is it Safe?
 Yes! Since all of the processes are done locally, no data is ever sent to either focuser or other parties.
 
 In order to function correctly (not display an insecure SSL warning on each request), the program has to install a root certificate using a PowerShell script as an administrator, which is why you might get a warning regarding admin execution during installation. __This is the only reason for the admin rights request!__
