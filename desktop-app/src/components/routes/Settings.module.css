@@ -5,7 +5,12 @@
 }
 
 .settingsHeader {
-    margin-top: clamp(150px, 27vh, 300px);
     font-family: "Header";
     color: var(--tertiary-color);
+    position: absolute;
+    bottom: 10%;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
 }
