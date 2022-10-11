@@ -1,0 +1,10 @@
+.modalHeader {
+    color: var(--tertiary-color);
+    font-family: 'Header';
+}
+
+.modalText {
+    color: white;
+    font-family: "George Light";
+    font-size: clamp(16px, 2.2vw, 32px);
+}

@@ -69,7 +69,7 @@ const AddUrl = () => {
         required
       />
       <div
-        className={`${styles.actionButtonsWrapper} d-flex justify-content-end gap-3`}
+        className={`${styles.actionButtonsWrapper} d-flex justify-content-end gap-3 mb-5`}
       >
         <button onClick={() => addUrlToList(false)}>Add Another</button>
         <button onClick={() => addUrlToList(true)}>Finish</button>

@@ -8,7 +8,7 @@ import modalStyles from "./Modal.module.css";
 
 import closeModalPath from "../../../public/static/images/close-modal.svg";
 
-const BaseModal = (props: { modalId: string; children: React.ReactChild }) => {
+const BaseModal = (props: { modalId: string; children: React.ReactNode }) => {
   const openModal = useSelector((state: RootState) => state.modal.openModal);
   const dispatch = useDispatch();
 
@@ -20,7 +20,7 @@ const BaseModal = (props: { modalId: string; children: React.ReactChild }) => {
       style={{
         overlay: {
           backgroundColor: "rgba(0,0,0,0.75)",
-          padding: "10% 20%",
+          padding: "5% 10%",
         },
       }}
     >
@@ -33,7 +33,7 @@ const BaseModal = (props: { modalId: string; children: React.ReactChild }) => {
         />
       </div>
       <div
-        className={`${modalStyles.mainContentWrapper} d-flex flex-column justify-content-between h-75`}
+        className={`${modalStyles.mainContentWrapper} d-flex flex-column justify-content-between h-100`}
       >
         {props.children}
       </div>
