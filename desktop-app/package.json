@@ -1,7 +1,7 @@
 {
   "name": "focuser",
   "productName": "Focuser",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A free & opensource distraction-reducing app for maximizing your productivity - built in electronJS!",
   "repository": {
     "type": "git",
