@@ -1,7 +1,7 @@
 ![Logo](./docs/images/logo.svg)
 _A free & opensource distraction-reducing app for maximizing your productivity - built in electronJS!_
 
-## Where am I?
+## Where Am I?
 
 Welcome! This GitHub repo hosts the F0cuser desktop application, which allows you to block web access to any website you want (and by blocking, we don't only mean access through your browser, but **all access**).
 
@@ -9,7 +9,7 @@ Welcome! This GitHub repo hosts the F0cuser desktop application, which allows yo
 ![Timer-Page](./docs/images/timer-page.png)
 
 
-## Why is This a Thing?
+## Why Is This A Thing?
 
 You probably know about several browser extensions and even an application or two that allow you to do pretty much the same thing, *but there are a few downsides*:
 
@@ -21,12 +21,12 @@ You probably know about several browser extensions and even an application or tw
 As of now, F0cuser might not be quite on the same level as the more established applications already on the market, but it is slowly getting there with more features and fixes added every week.
 
 
-## Is it Safe?
+## Is It Safe?
 Yes! Since all of the processes are done locally, no data is ever sent to either focuser or other parties.
 
 In order to function correctly (not display an insecure SSL warning on each request), the program has to install a root certificate using a PowerShell script as an administrator, which is why you might get a warning regarding admin execution during installation. __This is the only reason for the admin rights request!__
 
-## Sounds Great, How Do I Use it?
+## Sounds Great, How Do I Use It?
 
 You can download the latest version from the **Releases** tab, and after a quick installation (The app will be installed on the AppData/Local folder) you will be able to start the app and pick the websites you wish to block *- Yes, it is that easy*.
 
