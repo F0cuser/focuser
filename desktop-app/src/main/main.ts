@@ -276,13 +276,8 @@ ipcMain.handle(
   },
 );
 
-ipcMain.handle(channels.READ_SETTINGS, async (_: any, args: any) => {
-  const resultsToReturn: { [key: string]: any } = {};
-  for (const arg of args) {
-    const result = settingsStore.get(arg);
-    resultsToReturn[arg] = result;
-  }
-  return resultsToReturn;
+ipcMain.handle(channels.READ_SETTINGS, async () => {
+  return settingsStore.getAll();
 });
 
 ipcMain.handle(

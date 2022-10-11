@@ -20,7 +20,7 @@ const Sidebar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    ipcRenderer.invoke(channels.READ_SETTINGS, ['urls', 'runOnStartup']).then(results => {
+    ipcRenderer.invoke(channels.READ_SETTINGS).then(results => {
       if (results.urls)
         dispatch(setUrlsFromSettings(results.urls))
       results = Object.fromEntries(Object.entries(results).filter(([key]) => !key.includes('urls')));

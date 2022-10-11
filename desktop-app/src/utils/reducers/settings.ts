@@ -5,7 +5,7 @@ const { ipcRenderer } = window.require("electron");
 export const settingsReducer = createSlice({
   name: "settings",
   initialState: {
-    settings: { runOnStartup: false } as {[key: string]: any},
+    settings: { runOnStartup: false, deepFocus: false } as {[key: string]: any},
   },
   reducers: {
     updateSettings: (state, action) => {
