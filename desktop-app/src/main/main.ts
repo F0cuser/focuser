@@ -23,6 +23,7 @@ declare global {
 }
 
 let mainWindow: null | BrowserWindow;
+let isTimerActive = false;
 const instanceLock = app.requestSingleInstanceLock()
 const handleSecondInstance = () => {
   if (!instanceLock) {
@@ -256,6 +257,19 @@ app.on("window-all-closed", () => {
   }
 });
 
+app.on("before-quit", (event) => {
+  if (isTimerActive && settingsStore.get('deepFocus')) {
+    event.preventDefault()
+    const notification = new Notification({
+      title: "Closing Blocked",
+      body: "You have activated Deep Mode, so quitting the app is not allowed!",
+      icon: ICON_PATH,
+    });
+    notification.on("click", () => mainWindow?.show());
+    notification.show();
+  }
+})
+
 app.on("activate", () => {
   if (mainWindow === null) {
     createWindow();
@@ -302,14 +316,17 @@ ipcMain.handle(
 );
 
 ipcMain.handle(channels.START_PAC, async (_: any, __: any) => {
+  isTimerActive = true;
   winregEditor.setPacServer(pacServer.port);
 });
 
 ipcMain.handle(channels.STOP_PAC, async (_: any, __: any) => {
+  isTimerActive = false;
   winregEditor.disablePacServer();
 });
 
 ipcMain.handle(channels.FINISH_TIMER, () => {
+  isTimerActive = false;
   const notification = new Notification({
     title: "Time's Up!",
     body: "If you want to restart the timer, now's the time to do it!",

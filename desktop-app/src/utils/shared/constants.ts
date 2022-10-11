@@ -4,5 +4,5 @@ export const channels = {
   WRITE_URLS: "write_urls",
   START_PAC: "start_pac",
   STOP_PAC: "stop_pac",
-  FINISH_TIMER: "finish_timer"
+  FINISH_TIMER: "finish_timer",
 };
