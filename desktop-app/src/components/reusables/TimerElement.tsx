@@ -8,6 +8,7 @@ import { RootState } from "../../utils/store";
 
 const TimerElement = (props: {
   updateTime: (arg0: string, arg1: number) => void;
+  disabled: boolean;
 }) => {
   const timerState = useSelector((state: RootState) => state.timer.timer);
   const intervalRef = useRef(0);
@@ -43,7 +44,7 @@ const TimerElement = (props: {
           className={`${styles.upButton} ${styles.timerAdjust} mb-2`}
           onMouseUp={stopTimerAdjust}
           onMouseDown={() => onTimerAdjustPress("hours", 1)}
-          disabled={isTimerActive}
+          disabled={props.disabled}
         >
           <img className={`${styles.buttonImage}`} src={upArrowPath} alt="up" />
         </button>
@@ -54,7 +55,7 @@ const TimerElement = (props: {
           className={`${styles.downButton} ${styles.timerAdjust}`}
           onMouseUp={stopTimerAdjust}
           onMouseDown={() => onTimerAdjustPress("hours", -1)}
-          disabled={isTimerActive}
+          disabled={props.disabled}
         >
           <img
             className={`${styles.buttonImage}`}
@@ -71,7 +72,7 @@ const TimerElement = (props: {
           className={`${styles.upButton} ${styles.timerAdjust} mb-2`}
           onMouseUp={stopTimerAdjust}
           onMouseDown={() => onTimerAdjustPress("minutes", 1)}
-          disabled={isTimerActive}
+          disabled={props.disabled}
         >
           <img className={`${styles.buttonImage}`} src={upArrowPath} alt="up" />
         </button>
@@ -82,7 +83,7 @@ const TimerElement = (props: {
           className={`${styles.downButton} ${styles.timerAdjust}`}
           onMouseUp={stopTimerAdjust}
           onMouseDown={() => onTimerAdjustPress("minutes", -1)}
-          disabled={isTimerActive}
+          disabled={props.disabled}
         >
           <img
             className={`${styles.buttonImage}`}
@@ -99,7 +100,7 @@ const TimerElement = (props: {
           className={`${styles.upButton} ${styles.timerAdjust} mb-2`}
           onMouseUp={stopTimerAdjust}
           onMouseDown={() => onTimerAdjustPress("seconds", 1)}
-          disabled={isTimerActive}
+          disabled={props.disabled}
         >
           <img className={`${styles.buttonImage}`} src={upArrowPath} alt="up" />
         </button>
@@ -110,7 +111,7 @@ const TimerElement = (props: {
           className={`${styles.downButton} ${styles.timerAdjust}`}
           onMouseUp={stopTimerAdjust}
           onMouseDown={() => onTimerAdjustPress("seconds", -1)}
-          disabled={isTimerActive}
+          disabled={props.disabled}
         >
           <img
             className={`${styles.buttonImage}`}

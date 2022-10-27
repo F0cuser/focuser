@@ -34,10 +34,13 @@ function App() {
   const backgroundTimerRef = useRef();
 
   const callBackgroundTimerFunction = (functionName: string, ...args: (string | number | undefined)[]) => {
-    if (backgroundTimerRef) {
+    if (backgroundTimerRef?.current) {
       switch (functionName) {
         case ('updateTime'): 
           backgroundTimerRef.current.updateTime(...args);
+          break;
+        case ('resetTime'):
+          backgroundTimerRef.current.resetTime();
           break;
         case ('toggleTimer'):
           backgroundTimerRef.current.toggleTimer();
@@ -61,6 +64,7 @@ function App() {
                   <Timer
                     updateTime={(digitType, timeToAdd) => callBackgroundTimerFunction('updateTime', digitType, timeToAdd)}
                     toggleTimer={() => callBackgroundTimerFunction('toggleTimer')}
+                    resetTime={() => callBackgroundTimerFunction('resetTime')}
                   />
                 }
               />

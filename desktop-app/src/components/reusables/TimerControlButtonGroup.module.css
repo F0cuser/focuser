@@ -1,34 +1,55 @@
-.timerToggleButton, .timerToggleButton:hover {
+
+.timerControlButton, .timerControlButton:hover {
     background: var(--primary-color);
-    height: 254px;
-    width: 254px;
-    
     color: inherit;
     border: none;
     padding: 0;
     font: inherit;
     cursor: pointer;
     outline: inherit;
-    
 }
 
-.timerToggleButton:disabled, .timerToggleButton:disabled:hover {
+.timerControlButton:disabled, .timerControlButton:disabled:hover {
     transition: none;
     transform: none;
     background-color: var(--primary-color);
     cursor: wait;
 }
 
-.timerToggleButtonImage { 
-    aspect-ratio: 1;
-    width: 128px;
-    filter: invert(92%) sepia(23%) saturate(1291%) hue-rotate(336deg) brightness(103%) contrast(97%);
+
+.timerControlButton:hover {
+    background-color: #2f0b32;
 }
 
-.timerToggleButton:disabled .timerToggleButtonImage {
+
+
+.timerToggleButton {
+    height: 254px;
+    width: 254px;
+
+}
+
+.timerResetButton {
+    height: 128px;
+    width: 128px;
+}
+
+
+.timerToggleButtonImage { 
+    width: 128px;
+}
+
+.timerResetButtonImage {
+    width: 64px;
+}
+
+.timerControlButtonImage {
+    aspect-ratio: 1;
+    filter: invert(92%) sepia(23%) saturate(1291%) hue-rotate(336deg) brightness(103%) contrast(97%);
+
+}
+
+.timerControlButton:disabled .timerControlButtonImage {
     filter: invert(39%) sepia(12%) saturate(0%) hue-rotate(157deg) brightness(97%) contrast(87%);
 }
 
-.timerToggleButton:hover {
-    background-color: #2f0b32;
-}
