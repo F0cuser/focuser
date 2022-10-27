@@ -15,7 +15,7 @@ const TimerToggleButton = (props: {
 }) => {
   const isTimerActive = useSelector((state: RootState) => state.timer.isActive);
   return (
-    <div class={`${styles.timerControlButtonsWrapper} d-flex align-items-end`}>
+    <div className={`${styles.timerControlButtonsWrapper} d-flex align-items-end`}>
       <button onClick={props.resetFunction} disabled={props.disabled} className={`${styles.timerControlButton} ${styles.timerResetButton}  mt-5 ms-5`}>
         <img
           src={undoPath}

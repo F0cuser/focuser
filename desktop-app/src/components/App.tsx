@@ -31,7 +31,11 @@ function App() {
     },
   };
 
-  const backgroundTimerRef = useRef();
+  const backgroundTimerRef = useRef() as React.MutableRefObject<{
+    updateTime: (...args: any[]) => void;
+    resetTime: () => void;
+    toggleTimer: () => void;
+  }>;
 
   const callBackgroundTimerFunction = (functionName: string, ...args: (string | number | undefined)[]) => {
     if (backgroundTimerRef?.current) {
