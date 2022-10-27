@@ -2,12 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { channels } from "../shared/constants";
 const { ipcRenderer } = window.require("electron");
 
+const currentTime = new Date();
+
 
 export const timerReducer = createSlice({
     name: 'timer',
     initialState: {
         isActive: false,
-        timer: {hours: 0, minutes: 0, seconds: 0}
+        timer: {hours: currentTime.getHours(), minutes: currentTime.getMinutes(), seconds: currentTime.getSeconds()}
     },
     reducers: {
         toggleActive: (state, action) => {

@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useImperativeHandle } from "react";
-import { useTimer } from "react-timer-hook";
+import { TimerResult, useTimer } from "react-timer-hook";
 import { useDispatch } from "react-redux";
 import { toggleActive, setTimer } from "../../utils/reducers/timer";
 
@@ -7,13 +7,13 @@ import { toggleActive, setTimer } from "../../utils/reducers/timer";
 const BackgroundTimer = forwardRef((_, ref) => {
   const dispatch = useDispatch();
 
-  const timerHook = useTimer({
+  const timerHook: TimerResult = useTimer({
     autoStart: false,
     expiryTimestamp: new Date(),
     onExpire: () => {
       dispatch(toggleActive({isFinished: true}));
     },
-  }) as { [key: string]: any };
+  });
 
   useImperativeHandle(ref, () => ({
     updateTime(digitType: 'hours' | 'minutes' | 'seconds', timeToAdd: number) {
@@ -29,6 +29,14 @@ const BackgroundTimer = forwardRef((_, ref) => {
         seconds: timerHook.seconds,
       });
       timerHook.restart(newTime, false);
+    },
+
+    resetTime() {
+      timerHook.restart(new Date(), false);
+      if (timerHook.isRunning) {
+        timerHook.pause();
+        dispatch(toggleActive({isFinished: true}));
+      }
     },
 
     toggleTimer() {

@@ -7,6 +7,11 @@
     transition: all 100ms linear;
 }
 
+.switchWrapper.disabled {
+    cursor: wait;
+    color: #999999;
+}
+
 .switchWrapper:hover {
     backdrop-filter: brightness(150%);
 }
